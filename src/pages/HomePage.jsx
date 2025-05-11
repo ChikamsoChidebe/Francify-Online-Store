@@ -158,7 +158,7 @@ const HomePage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Summer 2023 Collection
+                Summer 2025 Collection
               </motion.span>
               <motion.h1 
                 className="text-4xl md:text-6xl font-bold mb-4"
