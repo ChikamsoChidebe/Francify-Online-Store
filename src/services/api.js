@@ -85,7 +85,7 @@ const products = [
     originalPrice: 119.99,
     description: "Start your day right with our premium coffee maker. Features programmable settings, thermal carafe, and sleek design.",
     category: "Home & Living",
-    image: "https://images.unsplash.com/photo-1570286424230-5959d91e1385?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    image: "https://tse2.mm.bing.net/th/id/OIP.Dc54pk2DQ55ZnMLAS_v4dQHaI0?rs=1&pid=ImgDetMain",
     images: [
       "https://images.unsplash.com/photo-1570286424230-5959d91e1385?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       "https://images.unsplash.com/photo-1572119865084-43c285814d63?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
@@ -149,7 +149,220 @@ const products = [
     inStock: true,
     stockCount: 3,
     tag: "Premium"
-  }
+  },
+  {
+  id: 9,
+  name: "Yoga Mat with Alignment Lines",
+  price: 39.99,
+  originalPrice: 49.99,
+  description: "Eco-friendly yoga mat with alignment lines for improved posture. Non-slip surface and 6mm cushioning.",
+  category: "Sports & Outdoors",
+  image: "https://tse2.mm.bing.net/th/id/OIP.8ntmtEaGR_LPby84rghRPwHaHT?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1599058917212-d750089bc9b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1600673081143-bfbb9c1d63ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.5,
+  reviews: 92,
+  inStock: true,
+  stockCount: 30,
+  isNew: true,
+  freeShipping: true
+},
+{
+  id: 10,
+  name: "Organic Skincare Set",
+  price: 59.99,
+  originalPrice: 74.99,
+  description: "Natural and cruelty-free skincare set including cleanser, toner, and moisturizer. Suitable for all skin types.",
+  category: "Beauty & Health",
+  image: "https://i.pinimg.com/736x/49/7d/0e/497d0ec25d12c40255b746b1b6c09ee3.jpg",
+  images: [
+    "https://images.unsplash.com/photo-1600180758890-6e1d119d9b5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1611078489935-07d2fa6f53db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.6,
+  reviews: 47,
+  inStock: true,
+  stockCount: 14,
+  tag: "Eco-Friendly"
+},
+{
+  id: 11,
+  name: "Modern Floor Lamp",
+  price: 149.99,
+  originalPrice: 189.99,
+  description: "Sleek modern floor lamp with adjustable brightness and smart control. Perfect for living rooms and offices.",
+  category: "Home & Living",
+  image: "https://tse4.mm.bing.net/th/id/OIP.R7u4-h1yruGbsWEYIujDYAHaHa?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1616627982872-f5a9a451bde3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1616627169119-421c680965a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.4,
+  reviews: 22,
+  inStock: true,
+  stockCount: 9
+},
+{
+  id: 12,
+  name: "Women's Winter Coat",
+  price: 119.99,
+  originalPrice: 159.99,
+  description: "Stylish and warm winter coat with faux fur hood and water-resistant fabric. Perfect for cold weather.",
+  category: "Fashion",
+  image: "https://tse1.mm.bing.net/th/id/OIP.HfyAupt4iHlUi_tqYldVOgHaJ4?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1602810316496-c2da5ee65a5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1604022603433-264fda998016?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.7,
+  reviews: 38,
+  inStock: true,
+  stockCount: 11,
+  isHot: true
+},
+{
+  id: 13,
+  name: "Pet Bed for Small Dogs",
+  price: 34.99,
+  originalPrice: 44.99,
+  description: "Cozy and washable pet bed designed for small dogs and cats. Soft fleece material and non-slip bottom.",
+  category: "Home & Living",
+  image: "https://tse2.mm.bing.net/th/id/OIP.nFJyBMs_H4egflqMW6MLYAHaGW?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1601758064222-6c8c7c273496?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1583337130417-3346a1d3c24c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.8,
+  reviews: 51,
+  inStock: true,
+  stockCount: 17,
+  tag: "Pet Friendly"
+},
+{
+  id: 14,
+  name: "Minimalist Wooden Desk",
+  price: 229.99,
+  originalPrice: 279.99,
+  description: "A minimalist oak desk perfect for home offices, featuring cable management and a sleek matte finish.",
+  category: "Home & Living",
+  image: "https://tse2.mm.bing.net/th/id/OIP.c5ZdDf4J8F6aC3JsFyBjQQHaHa?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1587502536263-9298e8b9893c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1593642634367-d91a135587b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.5,
+  reviews: 64,
+  inStock: true,
+  stockCount: 8
+},
+{
+  id: 15,
+  name: "Vintage Polaroid Camera",
+  price: 129.99,
+  originalPrice: 149.99,
+  description: "Capture retro-style instant photos with this refurbished Polaroid camera. Great for hobbyists and collectors.",
+  category: "Electronics",
+  image: "https://i.pinimg.com/474x/1c/ab/ac/1cabacc92eed79a75da8531706bb4f18--vintage-polaroid-camera-polaroid-cameras.jpg",
+  images: [
+    "https://images.unsplash.com/photo-1590642915559-0c3d50f2f31d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1584098999266-f0b38c56b545?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.2,
+  reviews: 35,
+  inStock: true,
+  stockCount: 12
+},
+{
+  id: 16,
+  name: "Premium Chef's Knife",
+  price: 79.99,
+  originalPrice: 99.99,
+  description: "Forged steel chef's knife with ergonomic handle. Razor-sharp and durable—ideal for professional kitchens.",
+  category: "Home & Living",
+  image: "https://tse4.mm.bing.net/th/id/OIP.PdBmq7P9FP3qXugYlz3ZxwHaHa?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1574502075818-296b0a5d1b03?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.9,
+  reviews: 110,
+  inStock: true,
+  stockCount: 22,
+  tag: "Best Seller"
+},
+{
+  id: 17,
+  name: "Wireless Noise-Cancelling Headphones",
+  price: 199.99,
+  originalPrice: 249.99,
+  description: "High-fidelity over-ear headphones with active noise canceling, 30-hour battery, and quick charge.",
+  category: "Electronics",
+  image: "https://tse1.mm.bing.net/th/id/OIP.q4SaBhExMj8OILSnCWSMeQHaHa?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1610440042759-91f55eb9c3d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1610440202055-59b4c5a5efb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.7,
+  reviews: 98,
+  inStock: true,
+  stockCount: 18
+},
+{
+  id: 18,
+  name: "Men's Leather Watch",
+  price: 149.00,
+  originalPrice: 189.00,
+  description: "Elegant analog leather watch with sapphire glass and water resistance. Classic design for daily wear.",
+  category: "Fashion",
+  image: "https://tse2.mm.bing.net/th/id/OIP.VN9YjFSrnrBozQGPobA0YAHaLH?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1600180758437-0cf2d66f7ee3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.6,
+  reviews: 76,
+  inStock: true,
+  stockCount: 14,
+  tag: "Luxury"
+},
+{
+  id: 19,
+  name: "Hardcover Journal Notebook",
+  price: 17.99,
+  originalPrice: 21.99,
+  description: "A premium leather-bound notebook with thick, lined pages. Ideal for journaling, note-taking, or sketching.",
+  category: "Books",
+  image: "https://tse4.mm.bing.net/th/id/OIP.5AuXY3lz00Ibnz-JVMg1ZAHaJ3?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.8,
+  reviews: 48,
+  inStock: true,
+  stockCount: 25,
+  tag: "Stationery"
+},
+{
+  id: 20,
+  name: "Wooden Stacking Toy Set",
+  price: 24.99,
+  originalPrice: 29.99,
+  description: "Colorful handmade stacking toy made from non-toxic wood. Helps toddlers develop coordination and motor skills.",
+  category: "Toys",
+  image: "https://tse1.explicit.bing.net/th/id/OIP.J1ADfraif70nJ_-2SbHVpwHaGD?rs=1&pid=ImgDetMain",
+  images: [
+    "https://images.unsplash.com/photo-1615484477641-61b09a370b97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+    "https://images.unsplash.com/photo-1576698484254-2cc12d3f90b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
+  ],
+  rating: 4.9,
+  reviews: 33,
+  inStock: true,
+  stockCount: 16,
+  tag: "Eco Friendly"
+}
 ];
 
 // Sample category data
