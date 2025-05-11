@@ -12,10 +12,10 @@ const RegisterPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const navigate = useNavigate();
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -23,31 +23,31 @@ const RegisterPage = () => {
       [name]: value
     }));
   };
-  
+
   const validateForm = () => {
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       setError('All fields are required');
       return false;
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return false;
     }
-    
+
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
       return false;
     }
-    
+
     return true;
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     try {
       setError('');
       setLoading(true);
@@ -60,93 +60,67 @@ const RegisterPage = () => {
       setLoading(false);
     }
   };
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-900 via-black to-red-900 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
+      <div className="max-w-md w-full space-y-8 bg-black bg-opacity-80 p-10 rounded-xl shadow-lg backdrop-blur-md border border-red-700">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Create your account</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h2 className="text-4xl font-extrabold text-red-400 mb-2 animate-slideDown">Create your account</h2>
+          <p className="mt-2 text-sm text-red-300">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link to="/login" className="font-medium text-red-500 hover:text-red-400 transition-colors duration-300">
               Sign in
             </Link>
           </p>
         </div>
-        
+
         {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+          <div className="bg-red-800 border-l-4 border-red-500 p-4 mb-4 animate-shake">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
+                <p className="text-sm text-red-300">{error}</p>
               </div>
             </div>
           </div>
         )}
-        
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} noValidate>
           <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">Full name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Full name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="email-address" className="sr-only">Email address</label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="confirm-password" className="sr-only">Confirm password</label>
-              <input
-                id="confirm-password"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
+            {['name', 'email', 'password', 'confirmPassword'].map((field, idx) => {
+              const isPassword = field === 'password' || field === 'confirmPassword';
+              const placeholderMap = {
+                name: 'Full name',
+                email: 'Email address',
+                password: 'Password',
+                confirmPassword: 'Confirm password'
+              };
+              return (
+                <div key={field} className="relative z-0 w-full mb-6 group">
+                  <input
+                    type={isPassword ? 'password' : field === 'email' ? 'email' : 'text'}
+                    name={field}
+                    id={field}
+                    autoComplete={field === 'email' ? 'email' : isPassword ? 'new-password' : 'name'}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    required
+                    className="block py-2.5 px-0 w-full text-red-300 bg-transparent border-0 border-b-2 border-red-600 appearance-none focus:outline-none focus:ring-0 focus:border-red-400 peer transition duration-300"
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor={field}
+                    className="absolute text-red-500 text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75"
+                  >
+                    {placeholderMap[field]}
+                  </label>
+                </div>
+              );
+            })}
           </div>
 
           <div className="flex items-center">
@@ -155,15 +129,15 @@ const RegisterPage = () => {
               name="terms"
               type="checkbox"
               required
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              className="h-4 w-4 text-red-500 focus:ring-red-400 border-gray-300 rounded"
             />
-            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+            <label htmlFor="terms" className="ml-2 block text-sm text-red-300 select-none">
               I agree to the{' '}
-              <Link to="/terms" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/terms" className="font-medium text-red-500 hover:text-red-400 transition-colors duration-300">
                 Terms of Service
               </Link>{' '}
               and{' '}
-              <Link to="/privacy" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/privacy" className="font-medium text-red-500 hover:text-red-400 transition-colors duration-300">
                 Privacy Policy
               </Link>
             </label>
@@ -173,47 +147,42 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-sm font-semibold rounded-md text-black bg-gradient-to-r from-red-400 via-red-600 to-black hover:from-red-500 hover:via-red-700 hover:to-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 transition-all duration-300 shadow-lg"
             >
               {loading ? 'Creating account...' : 'Create account'}
             </button>
           </div>
         </form>
-        
+
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-red-700"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-black text-red-400">Or continue with</span>
             </div>
           </div>
 
           <div className="mt-6 grid grid-cols-3 gap-3">
-            <div>
-              <button
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <FaGoogle className="text-red-500" />
-              </button>
-            </div>
-
-            <div>
-              <button
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <FaFacebook className="text-blue-600" />
-              </button>
-            </div>
-
-            <div>
-              <button
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <FaApple />
-              </button>
-            </div>
+            <button
+              className="w-full inline-flex justify-center py-2 px-4 border border-red-600 rounded-md shadow-sm bg-black text-red-500 hover:bg-red-900 transition-colors duration-300"
+              aria-label="Continue with Google"
+            >
+              <FaGoogle className="text-red-400" />
+            </button>
+            <button
+              className="w-full inline-flex justify-center py-2 px-4 border border-red-600 rounded-md shadow-sm bg-black text-red-500 hover:bg-red-900 transition-colors duration-300"
+              aria-label="Continue with Facebook"
+            >
+              <FaFacebook className="text-red-600" />
+            </button>
+            <button
+              className="w-full inline-flex justify-center py-2 px-4 border border-red-600 rounded-md shadow-sm bg-black text-red-500 hover:bg-red-900 transition-colors duration-300"
+              aria-label="Continue with Apple"
+            >
+              <FaApple className="text-red-400" />
+            </button>
           </div>
         </div>
       </div>

@@ -190,10 +190,10 @@ const Header = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Link to="/track-order" className="hover:text-indigo-500 transition-colors">Track Order</Link>
-              <Link to="/help" className="hover:text-indigo-500 transition-colors">Help & FAQs</Link>
+              <Link to="/track-order" className="hover:text-red-500 transition-colors">Track Order</Link>
+              <Link to="/help" className="hover:text-red-500 transition-colors">Help & FAQs</Link>
               <div className="relative group">
-                <button className="flex items-center hover:text-indigo-500 transition-colors">
+                <button className="flex items-center hover:text-red-500 transition-colors">
                   USD <FaAngleDown className="ml-1" size={12} />
                 </button>
                 <div className="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
@@ -439,14 +439,14 @@ const Header = () => {
               >
                 {currentUser ? (
                   <Link to="/profile" className="relative">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-indigo-100 transition-colors duration-300 group">
-                      <FaUser className="text-gray-600 group-hover:text-indigo-600 transition-colors duration-300" size={18} />
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
+                      <FaUser className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
                     </div>
                   </Link>
                 ) : (
                   <Link to="/login" className="relative">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-indigo-100 transition-colors duration-300 group">
-                      <FaUser className="text-gray-600 group-hover:text-indigo-600 transition-colors duration-300" size={18} />
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
+                      <FaUser className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
                     </div>
                   </Link>
                 )}
@@ -458,8 +458,8 @@ const Header = () => {
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <Link to="/notifications" className="relative">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-indigo-100 transition-colors duration-300 group">
-                    <FaBell className="text-gray-600 group-hover:text-indigo-600 transition-colors duration-300" size={18} />
+                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
+                    <FaBell className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">3</span>
                   </div>
                 </Link>
