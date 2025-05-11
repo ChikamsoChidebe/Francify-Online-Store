@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -34,8 +34,23 @@ import TrackOrderPage from './pages/TrackOrderPage';
 import Terms from './pages/Terms';
 import Shipping from './pages/Shipping';
 import FAQ from './pages/FAQ';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay or wait for actual loading event
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500); // 1.5 seconds delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
     <Router>
       <AuthProvider>
