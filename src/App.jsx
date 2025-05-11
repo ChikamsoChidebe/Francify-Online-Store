@@ -35,6 +35,7 @@ import Terms from './pages/Terms';
 import Shipping from './pages/Shipping';
 import FAQ from './pages/FAQ';
 import LoadingSpinner from './components/LoadingSpinner';
+import WarrantySupportPage from './pages/WarrantySupportPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -86,6 +87,7 @@ function App() {
                 <Route path="/privacy" element={<Terms />} />
                 <Route path="/shipping" element={<Shipping />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/warranty-support" element={<WarrantySupportPage />} />
               </Routes>
             </main>
             <Footer />

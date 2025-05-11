@@ -223,11 +223,17 @@ const ContactPage = () => {
       {/* Map */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-6">Our Location</h2>
-        <div className="h-96 bg-gray-200 rounded-lg">
-          {/* Replace with actual map component or iframe */}
-          <div className="w-full h-full flex items-center justify-center">
-            <p className="text-gray-500">Map goes here</p>
-          </div>
+        <div className="h-96 rounded-lg overflow-hidden">
+          <iframe
+            title="Francify Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1234567890123!2d3.379205315316789!3d6.524379795123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf3a0b1c12345%3A0x123456789abcdef!2s123%20Commerce%20Street%2C%20Lagos%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1610000000000!5m2!1sen!2sng"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
       

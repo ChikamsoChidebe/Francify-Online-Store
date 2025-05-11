@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaQuestionCircle, FaHeadset, FaBook, FaComments, FaEnvelope } from 'react-icons/fa';
+import '../styles/livechat.css'; // Import your CSS styles for the HelpPage
 
 const HelpPage = () => {
+    const [chatOpen, setChatOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { from: 'bot', text: 'Hello! How can I assist you today?' },
+  ]);
+  const [input, setInput] = useState('');
+
+  const toggleChat = () => {
+    setChatOpen(!chatOpen);
+  };
+
+  const sendMessage = () => {
+    if (input.trim() === '') return;
+    setMessages([...messages, { from: 'user', text: input }]);
+    setInput('');
+    // Simulate bot response
+    setTimeout(() => {
+      setMessages((msgs) => [
+        ...msgs,
+        { from: 'bot', text: 'Thank you for your message. We will get back to you shortly.' },
+      ]);
+    }, 1000);
+  };
+
+
   // FAQ data
   const faqs = [
     {
@@ -30,6 +55,16 @@ const HelpPage = () => {
     }
   ];
 
+  const handleSend = () => {
+    if (input.trim() === '') return;
+    setMessages([...messages, { from: 'user', text: input }]);
+    setInput('');
+    // For now, just echo the user message as bot response after a delay
+    setTimeout(() => {
+      setMessages(prev => [...prev, { from: 'bot', text: "Thank you for your message. We'll get back to you shortly." }]);
+    }, 1000);
+  };
+
   return (
     <div className="container mx-auto px-4 py-24">
       <div className="max-w-4xl mx-auto">
@@ -43,34 +78,36 @@ const HelpPage = () => {
         {/* Help Options */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaHeadset className="text-indigo-600 text-2xl" />
+            <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaHeadset className="text-red-600 text-2xl" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Customer Support</h3>
             <p className="text-gray-600 mb-4">Available 24/7 to assist you with any questions or concerns.</p>
-            <a href="tel:+12345678900" className="text-indigo-600 font-medium hover:text-indigo-800">
+            <a href="tel:+12345678900" className="text-red-600 font-medium hover:text-red-700">
               Call Us
             </a>
           </div>
           
           <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaComments className="text-indigo-600 text-2xl" />
+            <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaComments className="text-red-600 text-2xl" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Live Chat</h3>
             <p className="text-gray-600 mb-4">Chat with our support team for immediate assistance.</p>
-            <button className="text-indigo-600 font-medium hover:text-indigo-800">
+            <button 
+              onClick={toggleChat} 
+              className="text-red-600 font-medium hover:text-red-700">
               Start Chat
             </button>
           </div>
           
           <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaEnvelope className="text-indigo-600 text-2xl" />
+            <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaEnvelope className="text-red-600 text-2xl" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Email Support</h3>
             <p className="text-gray-600 mb-4">Send us an email and we'll get back to you within 24 hours.</p>
-            <a href="mailto:support@francify.com" className="text-indigo-600 font-medium hover:text-indigo-800">
+            <a href="mailto:support@francify.com" className="text-red-600 font-medium hover:text-red-700">
               Email Us
             </a>
           </div>
@@ -85,7 +122,7 @@ const HelpPage = () => {
                 <details className="group">
                   <summary className="flex items-center justify-between p-4 cursor-pointer">
                     <h3 className="text-lg font-medium">{faq.question}</h3>
-                    <span className="text-indigo-600 group-open:rotate-180 transition-transform">
+                    <span className="text-red-600 group-open:rotate-180 transition-transform">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
@@ -117,7 +154,7 @@ const HelpPage = () => {
                 href="#" 
                 className="flex items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
-                <span className="text-indigo-600 mr-3">{topic.icon}</span>
+                <span className="text-red-600 mr-3">{topic.icon}</span>
                 <span className="font-medium">{topic.title}</span>
               </a>
             ))}
@@ -134,7 +171,7 @@ const HelpPage = () => {
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   placeholder="Your name"
                 />
               </div>
@@ -143,7 +180,7 @@ const HelpPage = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   placeholder="Your email"
                 />
               </div>
@@ -153,7 +190,7 @@ const HelpPage = () => {
               <input
                 type="text"
                 id="subject"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 placeholder="Subject of your inquiry"
               />
             </div>
@@ -162,20 +199,59 @@ const HelpPage = () => {
               <textarea
                 id="message"
                 rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 placeholder="How can we help you?"
               ></textarea>
             </div>
             <div className="text-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
+                className="px-6 py-3 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-colors"
               >
                 Submit Inquiry
               </button>
             </div>
           </form>
         </div>
+      </div>
+
+      {/* Live Chat Widget */}
+      
+      {/* Chat widget */}
+      <div className="chat-widget">
+        {!chatOpen && (
+          <button className="start-chat-btn" onClick={toggleChat}>
+            Start Chat
+          </button>
+        )}
+        {chatOpen && (
+          <div className="chat-window">
+            <div className="chat-header">
+              <span>Live Chat</span>
+              <button onClick={toggleChat} className="close-chat-btn">X</button>
+            </div>
+            <div className="chat-messages">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`chat-message ${msg.from === 'user' ? 'user-message' : 'bot-message'}`}
+                >
+                  {msg.text}
+                </div>
+              ))}
+            </div>
+            <div className="chat-input-area">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                placeholder="Type your message..."
+              />
+              <button onClick={sendMessage}>Send</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

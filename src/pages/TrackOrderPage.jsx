@@ -68,12 +68,12 @@ const TrackOrderPage = () => {
 
   const getStatusIcon = (statusCode) => {
     switch (statusCode) {
-      case 1: return <FaBox className="text-indigo-600" size={24} />;
-      case 2: return <FaBoxOpen className="text-indigo-600" size={24} />;
-      case 3: return <FaTruck className="text-indigo-600" size={24} />;
-      case 4: return <FaMapMarkerAlt className="text-indigo-600" size={24} />;
+      case 1: return <FaBox className="text-red-600" size={24} />;
+      case 2: return <FaBoxOpen className="text-red-600" size={24} />;
+      case 3: return <FaTruck className="text-red-600" size={24} />;
+      case 4: return <FaMapMarkerAlt className="text-red-600" size={24} />;
       case 5: return <FaCheckCircle className="text-green-600" size={24} />;
-      default: return <FaBox className="text-indigo-600" size={24} />;
+      default: return <FaBox className="text-red-600" size={24} />;
     }
   };
 
@@ -105,7 +105,7 @@ const TrackOrderPage = () => {
                   id="orderNumber"
                   value={orderNumber}
                   onChange={(e) => setOrderNumber(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   placeholder="e.g. ORD-12345"
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -122,7 +122,7 @@ const TrackOrderPage = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   placeholder="Email used for your order"
                 />
               </div>
@@ -131,7 +131,7 @@ const TrackOrderPage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors disabled:bg-indigo-400"
+                  className="px-6 py-3 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-colors disabled:bg-red-400"
                 >
                   {loading ? (
                     <span className="flex items-center justify-center">
@@ -157,10 +157,10 @@ const TrackOrderPage = () => {
                 If you're having trouble tracking your order or have any questions, please contact our customer support team.
               </p>
               <div className="flex flex-col sm:flex-row sm:space-x-4">
-                <a href="tel:+12345678900" className="text-indigo-600 font-medium hover:text-indigo-800 mb-2 sm:mb-0">
-                  Call Us: +1 (234) 567-8900
+                <a href="tel:+2349039220171" className="text-red-600 font-medium hover:text-red-800 mb-2 sm:mb-0">
+                  Call Us: +234 903 922 0171
                 </a>
-                <a href="mailto:support@francify.com" className="text-indigo-600 font-medium hover:text-indigo-800">
+                <a href="mailto:support@francify.com" className="text-red-600 font-medium hover:text-red-800">
                   Email: support@francify.com
                 </a>
               </div>
@@ -169,14 +169,14 @@ const TrackOrderPage = () => {
         ) : (
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* Order Status Header */}
-            <div className="bg-indigo-600 text-white p-6">
+            <div className="bg-red-600 text-white p-6">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center">
                 <div>
                   <h2 className="text-xl font-bold mb-2">Order #{mockOrderData.orderNumber}</h2>
-                  <p className="text-indigo-100">Placed on {mockOrderData.orderDate}</p>
+                  <p className="text-red-100">Placed on {mockOrderData.orderDate}</p>
                 </div>
                 <div className="mt-4 md:mt-0">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-white text-indigo-700 font-medium text-sm">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-white text-red-700 font-medium text-sm">
                     {mockOrderData.status}
                   </span>
                 </div>
@@ -194,7 +194,7 @@ const TrackOrderPage = () => {
                     {mockOrderData.timeline.map((event, index) => (
                       <div key={index} className="relative flex items-start">
                         <div className="absolute left-0 mt-1 -ml-1">
-                          <div className={`w-6 h-6 rounded-full ${index === mockOrderData.timeline.length - 1 ? 'bg-indigo-600' : 'bg-green-500'} flex items-center justify-center`}>
+                          <div className={`w-6 h-6 rounded-full ${index === mockOrderData.timeline.length - 1 ? 'bg-red-600' : 'bg-green-500'} flex items-center justify-center`}>
                             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
@@ -283,7 +283,7 @@ const TrackOrderPage = () => {
               <div className="mt-8 text-center">
                 <button
                   onClick={() => setOrderTracked(false)}
-                  className="px-6 py-2 border border-indigo-600 text-indigo-600 font-medium rounded-md hover:bg-indigo-50 transition-colors"
+                  className="px-6 py-2 border border-red-600 text-red-600 font-medium rounded-md hover:bg-red-50 transition-colors"
                 >
                   Track Another Order
                 </button>
