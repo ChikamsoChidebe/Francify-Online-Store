@@ -4,13 +4,14 @@ import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaBars, FaTimes, FaAngleDown
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-
+import '../styles/header-dropdown.css'; // Import your CSS file for header styles
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const [megaMenuOpen, setMegaMenuOpen] = useState(null);
+  // Removed megaMenuOpen state as dropdown will be shown on hover using CSS
+  // const [megaMenuOpen, setMegaMenuOpen] = useState(null);
   const { cart } = useCart();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const Header = () => {
     },
     {
       name: 'Home & Living',
-      subcategories: ['Furniture', 'Decor', 'Kitchen', 'Bedding', 'Bath', 'Lighting', 'Rugs & Carpets', 'Garden', 'Home Appliances', 'Storage', 'Home Office', 'Smart Home', 'Wall Art', 'Curtains & Blinds'],
+      subcategories: ['Furniture', 'Decoration', 'Kitchen', 'Bedding', 'Bath', 'Lighting', 'Rugs & Carpets', 'Garden', 'Home Appliances', 'Storage', 'Home Office', 'Smart Home', 'Wall Art', 'Curtains & Blinds'],
       featured: [
         { name: 'Modern Living', image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' },
         { name: 'Home Office', image: 'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80' }
@@ -204,142 +205,82 @@ const Header = () => {
               </motion.div>
               
               {/* Show only first 3 categories for a cleaner header */}
-              {categories.slice(0, 3).map((category, index) => (
-                <motion.div 
-                  key={index} 
-                  className="relative"
-                  onMouseEnter={() => setMegaMenuOpen(index)}
-                  onMouseLeave={() => setMegaMenuOpen(null)}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                >
-                  <button className="nav-link flex items-center text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">
-                    {category.name} <FaAngleDown className="ml-1" />
-                  </button>
-                  
-                  {megaMenuOpen === index && (
-                    <motion.div 
-                      className="modern-mega-menu"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ maxHeight: '80vh', overflowY: 'auto' }}
+  {categories.slice(0, 3).map((category, index) => (
+  <motion.div 
+    key={index} 
+    className="relative group"
+    whileHover={{ scale: 1.05 }} 
+    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+  >
+    <button className="nav-link flex items-center text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">
+      {category.name} <FaAngleDown className="ml-1" />
+    </button>
+    
+    <motion.div 
+      className="modern-mega-menu bg-gradient-to-br from-red-50 via-red-100 to-red-200 rounded-xl shadow-2xl p-8 max-w-full mx-auto invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-300"
+      initial={false}
+      style={{ maxHeight: '80vh', overflowY: 'auto' }}
+    >
+      <div className="container mx-auto p-6">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-8 flex justify-center">
+            <div className="popular-categories-container">
+              <h3 className="text-xl font-extrabold mb-6 text-red-800 border-b-4 border-red-400 pb-3 inline-block tracking-wide text-center">Popular Categories</h3>
+              <div className="grid grid-cols-2 gap-x-6 gap-y-3" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                {category.subcategories.slice(0, 6).map((subcat, idx) => (
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ x: 8 }}
+                    transition={{ type: "spring", stiffness: 500 }}
+                  >
+                    <Link 
+                      to={`/category/${subcat.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="text-red-700 hover:text-red-900 transition-colors flex items-center py-2 font-semibold"
                     >
-                      <div className="container mx-auto p-6">
-                        <div className="grid grid-cols-12 gap-6">
-                          <div className="col-span-5">
-                            <h3 className="text-lg font-bold mb-4 text-gray-800 border-b-2 border-indigo-600 pb-2 inline-block">Popular Categories</h3>
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-2" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                              {category.subcategories.map((subcat, idx) => (
-                                <motion.div 
-                                  key={idx}
-                                  whileHover={{ x: 5 }}
-                                  transition={{ type: "spring", stiffness: 400 }}
-                                >
-                                  <Link 
-                                    to={`/category/${subcat.toLowerCase().replace(/\s+/g, '-')}`}
-                                    className="text-gray-600 hover:text-red-600 transition-colors flex items-center py-1"
-                                  >
-                                    <span className="w-1.5 h-1.5 bg-indigo-600 rounded-full mr-2"></span>
-                                    {subcat}
-                                  </Link>
-                                </motion.div>
-                              ))}
-                            </div>
-                            
-                            {category.brands && (
-                              <div className="mt-6">
-                                <h3 className="text-lg font-bold mb-3 text-gray-800 border-b-2 border-indigo-600 pb-2 inline-block">Popular Brands</h3>
-                                <div className="flex flex-wrap gap-2">
-                                  {category.brands.map((brand, idx) => (
-                                    <Link 
-                                      key={idx}
-                                      to={`/brand/${brand.toLowerCase().replace(/\s+/g, '-')}`}
-                                      className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-indigo-100 hover:text-indigo-600 transition-colors"
-                                    >
-                                      {brand}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                          
-                          {category.featured.map((item, idx) => (
-                            <div key={idx} className="col-span-3">
-                              <motion.div 
-                                className="relative h-48 rounded-lg overflow-hidden mb-3 group"
-                                whileHover={{ scale: 1.03 }}
-                                transition={{ type: "spring", stiffness: 300 }}
-                              >
-                                <img 
-                                  src={item.image} 
-                                  alt={item.name} 
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 flex items-end p-4">
-                                  <div>
-                                    <h4 className="text-white font-bold text-lg mb-1">{item.name}</h4>
-                                    <Link 
-                                      to={`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                      className="text-white text-sm font-medium bg-indigo-600 px-3 py-1 rounded-full inline-flex items-center"
-                                    >
-                                      Shop Now <span className="ml-1">→</span>
-                                    </Link>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            </div>
-                          ))}
-                          
-                          <div className="col-span-2">
-                            <motion.div 
-                              className="bg-gradient-to-br from-indigo-600 to-purple-800 text-white p-4 rounded-lg h-full flex flex-col justify-center"
-                              whileHover={{ scale: 1.03 }}
-                              transition={{ type: "spring", stiffness: 300 }}
-                            >
-                              <div className="bg-white/10 rounded-full w-12 h-12 flex items-center justify-center mb-3">
-                                <span className="text-xl font-bold">%</span>
-                              </div>
-                              <h3 className="text-xl font-bold mb-2">Special Offer</h3>
-                              <p className="mb-4 text-white/90">Get up to 50% off on selected items</p>
-                              <Link 
-                                to="/sale" 
-                                className="bg-white text-indigo-600 px-4 py-2 rounded-md inline-block text-center font-medium hover:bg-gray-100 transition-colors"
-                              >
-                                View Deals
-                              </Link>
-                            </motion.div>
-                          </div>
-                        </div>
-                        
-                        <div className="mt-6 pt-4 border-t border-gray-200">
-                          <div className="flex justify-between items-center">
-                            <div className="flex items-center">
-                              <span className="text-indigo-600 font-semibold mr-2">Trending:</span>
-                              {['New Arrivals', 'Best Sellers', 'Summer Sale', 'Clearance'].map((item, idx) => (
-                                <Link 
-                                  key={idx}
-                                  to={`/search?q=${item.toLowerCase().replace(/\s+/g, '+')}`}
-                                  className="text-gray-600 hover:text-indigo-600 text-sm mx-2"
-                                >
-                                  {item}
-                                </Link>
-                              ))}
-                            </div>
-                            <Link 
-                              to={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center"
-                            >
-                              View All {category.name} <span className="ml-1">→</span>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              ))}
+                      <span className="w-2 h-2 bg-red-400 rounded-full mr-3 shadow-md"></span>
+                      {subcat}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-8 pt-6 border-t border-red-300">
+          <div className="flex justify-between items-center">
+            <Link 
+              to={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+              className="text-red-700 hover:text-red-900 font-extrabold flex items-center tracking-wide"
+            >
+              View All {category.name} <span className="ml-2">→</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  </motion.div>
+))}
+
+
+        
+        {/* <div className="mt-8 pt-6 border-t border-red-300">
+          <div className="flex justify-between items-center">
+            <Link 
+              to={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+              className="text-red-700 hover:text-red-900 font-extrabold flex items-center tracking-wide"
+            >
+              View All {category.name} <span className="ml-2">→</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  </motion.div> */}
+{/* ))} */}
+
+
+
               
               <motion.div 
                 className="relative group" 
