@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { FaFilter, FaSort, FaHeart, FaShoppingCart, FaStar } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { fetchProducts } from '../services/api';
+import ProductCard from '../components/ProductCard';
+import { useProductContext } from '../context/ProductContext';
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
+  const { products: contextProducts } = useProductContext();
+  const [apiProducts, setApiProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   const [filters, setFilters] = useState({
     category: '',
     priceRange: '',
@@ -15,7 +19,7 @@ const ProductsPage = () => {
   });
   const [sortBy, setSortBy] = useState('featured');
   const [filtersOpen, setFiltersOpen] = useState(false);
-  
+
   // Categories for filter
   const categories = [
     'All Categories',
@@ -25,7 +29,7 @@ const ProductsPage = () => {
     'Beauty & Health',
     'Sports & Outdoors'
   ];
-  
+
   // Price ranges for filter
   const priceRanges = [
     { label: 'All Prices', value: '' },
@@ -35,7 +39,7 @@ const ProductsPage = () => {
     { label: '$200 - $500', value: '200-500' },
     { label: 'Over $500', value: 'over-500' }
   ];
-  
+
   // Rating options for filter
   const ratings = [
     { label: 'All Ratings', value: '' },
@@ -44,14 +48,14 @@ const ProductsPage = () => {
     { label: '2 Stars & Up', value: '2' },
     { label: '1 Star & Up', value: '1' }
   ];
-  
+
   // Availability options for filter
   const availabilityOptions = [
     { label: 'All Items', value: '' },
     { label: 'In Stock', value: 'in-stock' },
     { label: 'Out of Stock', value: 'out-of-stock' }
   ];
-  
+
   // Sort options
   const sortOptions = [
     { label: 'Featured', value: 'featured' },
@@ -61,30 +65,30 @@ const ProductsPage = () => {
     { label: 'Best Selling', value: 'best-selling' },
     { label: 'Rating', value: 'rating' }
   ];
-  
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const data = await fetchProducts();
-        setProducts(data);
+        setApiProducts(data);
       } catch (error) {
         console.error('Error loading products:', error);
       } finally {
         setLoading(false);
       }
     };
-    
+
     loadProducts();
   }, []);
-  
+
+  // Combine products from context and API
+  const combinedProducts = [...contextProducts, ...apiProducts];
+
   // Filter products based on selected filters
-  const filteredProducts = products.filter(product => {
-    // Filter by category
+  const filteredProducts = combinedProducts.filter(product => {
     if (filters.category && filters.category !== 'All Categories' && product.category !== filters.category) {
       return false;
     }
-    
-    // Filter by price range
     if (filters.priceRange) {
       const price = product.price;
       switch (filters.priceRange) {
@@ -107,13 +111,9 @@ const ProductsPage = () => {
           break;
       }
     }
-    
-    // Filter by rating
     if (filters.rating && product.rating < parseInt(filters.rating)) {
       return false;
     }
-    
-    // Filter by availability
     if (filters.availability) {
       if (filters.availability === 'in-stock' && !product.inStock) {
         return false;
@@ -122,10 +122,9 @@ const ProductsPage = () => {
         return false;
       }
     }
-    
     return true;
   });
-  
+
   // Sort filtered products
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortBy) {
@@ -134,23 +133,23 @@ const ProductsPage = () => {
       case 'price-desc':
         return b.price - a.price;
       case 'newest':
-        return a.id < b.id ? 1 : -1; // Assuming newer products have higher IDs
+        return a.id < b.id ? 1 : -1;
       case 'rating':
         return b.rating - a.rating;
       case 'best-selling':
-        return (b.reviews || 0) - (a.reviews || 0); // Using review count as a proxy for popularity
-      default: // featured
-        return 0; // Keep original order
+        return (b.reviews || 0) - (a.reviews || 0);
+      default:
+        return 0;
     }
   });
-  
+
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: value
     }));
   };
-  
+
   const clearFilters = () => {
     setFilters({
       category: '',
@@ -159,21 +158,6 @@ const ProductsPage = () => {
       availability: ''
     });
     setSortBy('featured');
-  };
-  
-  // Render star ratings
-  const renderStars = (rating) => {
-    return (
-      <div className="flex">
-        {[...Array(5)].map((_, i) => (
-          <FaStar 
-            key={i} 
-            className={i < Math.floor(rating) ? "text-yellow-400" : "text-gray-300"} 
-            size={14} 
-          />
-        ))}
-      </div>
-    );
   };
 
   return (
@@ -185,16 +169,16 @@ const ProductsPage = () => {
             {sortedProducts.length} products found
           </p>
         </div>
-        
-        <div className="flex items-center mt-4 md:mt-0">
-          <button 
+
+        <div className="flex items-center mt-4 md:mt-0 space-x-4">
+          <button
             className="flex items-center mr-4 md:hidden bg-white px-4 py-2 rounded-md shadow-sm border border-gray-200"
             onClick={() => setFiltersOpen(!filtersOpen)}
           >
             <FaFilter className="mr-2 text-gray-600" />
             <span>Filters</span>
           </button>
-          
+
           <div className="relative">
             <select
               value={sortBy}
@@ -211,21 +195,21 @@ const ProductsPage = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="flex flex-col md:flex-row">
         {/* Filters - Desktop */}
         <div className="hidden md:block w-64 mr-8">
           <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Filters</h2>
-              <button 
+              <button
                 onClick={clearFilters}
                 className="text-sm text-indigo-600 hover:text-indigo-800"
               >
                 Clear All
               </button>
             </div>
-            
+
             {/* Category Filter */}
             <div className="mb-6">
               <h3 className="font-medium mb-3">Category</h3>
@@ -247,7 +231,7 @@ const ProductsPage = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Price Range Filter */}
             <div className="mb-6">
               <h3 className="font-medium mb-3">Price Range</h3>
@@ -269,7 +253,7 @@ const ProductsPage = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Rating Filter */}
             <div className="mb-6">
               <h3 className="font-medium mb-3">Rating</h3>
@@ -287,7 +271,7 @@ const ProductsPage = () => {
                     <label htmlFor={`rating-${index}`} className="ml-2 text-sm text-gray-700 flex items-center">
                       {rating.value ? (
                         <>
-                          {renderStars(parseInt(rating.value))}
+                          <FaStar className="text-yellow-400" size={14} />
                           <span className="ml-1">& Up</span>
                         </>
                       ) : (
@@ -298,7 +282,7 @@ const ProductsPage = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Availability Filter */}
             <div>
               <h3 className="font-medium mb-3">Availability</h3>
@@ -322,7 +306,7 @@ const ProductsPage = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Products Grid */}
         <div className="flex-1">
           {loading ? (
@@ -349,56 +333,7 @@ const ProductsPage = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {sortedProducts.map(product => (
-                <motion.div 
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                  whileHover={{ y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Link to={`/product/${product.id}`} className="block relative">
-                    <div className="relative h-64 overflow-hidden">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                      />
-                      {product.isNew && (
-                        <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">New</span>
-                      )}
-                      {product.discount && (
-                        <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">{product.discount}</span>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <div className="text-xs text-gray-500 mb-1">{product.category}</div>
-                      <h3 className="font-medium text-gray-900 mb-1 truncate">{product.name}</h3>
-                      <div className="flex items-center mb-2">
-                        {renderStars(product.rating)}
-                        <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div>
-                          {product.originalPrice ? (
-                            <div className="flex items-center">
-                              <span className="font-bold text-gray-900">${product.price.toFixed(2)}</span>
-                              <span className="text-sm text-gray-500 line-through ml-2">${product.originalPrice.toFixed(2)}</span>
-                            </div>
-                          ) : (
-                            <span className="font-bold text-gray-900">${product.price.toFixed(2)}</span>
-                          )}
-                        </div>
-                        <div className="flex space-x-2">
-                          <button className="p-1.5 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-                            <FaHeart className="text-gray-400 hover:text-red-500 transition-colors" size={16} />
-                          </button>
-                          <button className="p-1.5 bg-indigo-100 rounded-full hover:bg-indigo-200 transition-colors">
-                            <FaShoppingCart className="text-indigo-600" size={16} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           )}

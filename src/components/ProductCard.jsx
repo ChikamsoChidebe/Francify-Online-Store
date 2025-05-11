@@ -4,10 +4,16 @@ import { FaHeart, FaRegHeart, FaShoppingCart, FaEye, FaRegStar, FaStar, FaShippi
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { getRandomFallbackImage } from '../data/productImages';
+import { fetchProducts } from '../services/api';
+import { useProductContext } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
 
 const ProductCard = ({ product }) => {
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const inWishlist = isInWishlist(product.id);
+  const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
+const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
+
   const [isHovered, setIsHovered] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -207,7 +213,7 @@ const ProductCard = ({ product }) => {
         
         {/* Price */}
         <div className="product-price flex items-center mt-2">
-          <span className="current-price text-lg font-bold text-red-600">${product.price.toFixed(2)}</span>
+          <span className="current-price text-lg font-bold text-red-600">${displayPrice}</span>
           {product.originalPrice && (
             <span className="original-price text-sm text-gray-400 line-through ml-2">${product.originalPrice.toFixed(2)}</span>
           )}

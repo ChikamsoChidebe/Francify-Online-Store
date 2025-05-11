@@ -235,9 +235,9 @@ const CartPage = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">${item.price.toFixed(2)}</div>
+                        <div className="text-sm text-gray-900">${typeof item.price === 'number' ? item.price.toFixed(2) : parseFloat(item.price).toFixed(2)}</div>
                         {item.originalPrice && (
-                          <div className="text-xs text-gray-500 line-through">${item.originalPrice.toFixed(2)}</div>
+                          <div className="text-xs text-gray-500 line-through">${typeof item.originalPrice === 'number' ? item.originalPrice.toFixed(2) : parseFloat(item.originalPrice).toFixed(2)}</div>
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -266,7 +266,7 @@ const CartPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ${(typeof item.price === 'number' ? item.price : parseFloat(item.price)) * item.quantity.toFixed(2)}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

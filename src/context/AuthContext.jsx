@@ -18,11 +18,13 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     // This would normally connect to a backend API
     // For demo purposes, we'll simulate a successful login
+    // Add role property to user object for role-based access
     const user = {
       id: 1,
       name: 'Demo User',
       email: email,
-      avatar: 'https://i.pravatar.cc/150?img=3'
+      avatar: 'https://i.pravatar.cc/150?img=3',
+      role: email === 'chikamsochidebe@gmail.com' ? 'admin' : 'user' // simple role assignment
     };
     
     setCurrentUser(user);
@@ -37,7 +39,8 @@ export const AuthProvider = ({ children }) => {
       id: Date.now(),
       name: name,
       email: email,
-      avatar: 'https://i.pravatar.cc/150?img=8'
+      avatar: 'https://i.pravatar.cc/150?img=8',
+      role: 'user' // default role
     };
     
     setCurrentUser(user);
@@ -50,11 +53,16 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('francifyUser');
   };
 
+  const isAdmin = () => {
+    return currentUser?.role === 'admin';
+  };
+
   const value = {
     currentUser,
     login,
     register,
     logout,
+    isAdmin,
     loading
   };
 

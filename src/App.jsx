@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/AuthContext';
 
 // Layout Components
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 // Pages
+import AdminPage from './pages/AdminPage';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import ProductsPage from './pages/ProductsPage';
@@ -37,6 +39,18 @@ import FAQ from './pages/FAQ';
 import LoadingSpinner from './components/LoadingSpinner';
 import WarrantySupportPage from './pages/WarrantySupportPage';
 
+const AdminRoute = ({ children }) => {
+  const { currentUser, isAdmin } = useAuth();
+
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
+  if (!isAdmin()) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -52,6 +66,9 @@ function App() {
   if (loading) {
     return <LoadingSpinner />;
   }
+
+
+
   return (
     <Router>
       <AuthProvider>
@@ -88,6 +105,12 @@ function App() {
                 <Route path="/shipping" element={<Shipping />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/warranty-support" element={<WarrantySupportPage />} />
+                <Route path="/admin" element={
+                <AdminRoute>
+                  <AdminPage />
+                </AdminRoute>
+              } />
+              {/* fallback or other routes */}
               </Routes>
             </main>
             <Footer />
