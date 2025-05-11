@@ -107,7 +107,7 @@ const ProductCard = ({ product }) => {
         </motion.button>
 
         {/* Product image */}
-        <Link to={`/products/${product.id}`} className="block relative">
+        <Link to={`/product/${product.id}`} className="block relative">
           <div className="product-image-container h-64 overflow-hidden relative">
             {/* Premium frame with gradient border */}
             <div className="absolute inset-0 rounded-t-lg bg-gradient-to-br from-white via-gray-100 to-gray-200 p-[1px]"></div>
@@ -178,7 +178,9 @@ const ProductCard = ({ product }) => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
+            <Link to={`/product/${product.id}`} className="block relative">
               <FaEye />
+            </Link>
             </motion.button>
             <motion.button 
               className="bg-gradient-to-r from-red-500 to-purple-600 text-white p-3 rounded-full shadow-lg hover:from-red-600 hover:to-purple-700 transition-colors" 
