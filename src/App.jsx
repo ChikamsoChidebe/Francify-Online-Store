@@ -89,7 +89,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/orders" element={<OrdersPage />} />
-                <Route path="/order/:id" element={<OrderDetailsPage />} />
+                <Route path="/orderdetails/:id" element={<OrderDetailsPage />} />
                 <Route path="/wishlist" element={<WishlistPage />} />
                 <Route path="/sale" element={<SalePage />} />
                 <Route path="/search" element={<SearchResultsPage />} />

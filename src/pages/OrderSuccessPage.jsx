@@ -16,7 +16,7 @@ const OrderSuccessPage = () => {
           </p>
           <Link 
             to="/" 
-            className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
+            className="inline-flex items-center bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition"
           >
             <FaHome className="mr-2" /> Return to Home
           </Link>
@@ -123,13 +123,13 @@ const OrderSuccessPage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
             >
               <FaHome className="mr-2" /> Continue Shopping
             </Link>
             <Link
-              to={`/orders/${order.id}`}
-              className="inline-flex items-center justify-center px-5 py-3 border border-gray-300 text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
+              to={`/orderdetails/${order.id}`}
+              className="inline-flex items-center justify-center px-5 py-3 border border-gray-300 text-base font-medium rounded-md text-red-600 bg-white hover:bg-gray-50"
             >
               <FaFileAlt className="mr-2" /> View Order Details
             </Link>

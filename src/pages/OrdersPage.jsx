@@ -44,14 +44,14 @@ const OrdersPage = () => {
               placeholder="Search orders by ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <FaSearch className="text-gray-400" />
             </div>
           </div>
           <select
-            className="border border-gray-300 rounded-r-md px-4 py-2 bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="border border-gray-300 rounded-r-md px-4 py-2 bg-white focus:outline-none focus:ring-red-500 focus:border-red-500"
           >
             <option value="all">All Orders</option>
             <option value="processing">Processing</option>
@@ -89,7 +89,7 @@ const OrdersPage = () => {
           )}
           <Link 
             to="/products" 
-            className="inline-block bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
+            className="inline-block bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition"
           >
             Start Shopping
           </Link>
@@ -153,7 +153,7 @@ const OrdersPage = () => {
                   </div>
                   <Link 
                     to={`/orders/${order.id}`}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
                   >
                     View Details
                   </Link>

@@ -68,7 +68,7 @@ const OrderDetailsPage = () => {
           </p>
           <Link 
             to="/orders" 
-            className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
+            className="inline-flex items-center bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition"
           >
             <FaArrowLeft className="mr-2" /> Back to Orders
           </Link>
@@ -93,7 +93,7 @@ const OrderDetailsPage = () => {
     <div className="container mx-auto px-4 py-24">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center mb-8">
-          <Link to="/orders" className="text-indigo-600 hover:text-indigo-800 mr-4">
+          <Link to="/orders" className="text-red-600 hover:text-red-800 mr-4">
             <FaArrowLeft />
           </Link>
           <h1 className="text-3xl font-bold">Order #{order.id}</h1>
@@ -108,7 +108,7 @@ const OrderDetailsPage = () => {
             <div className="overflow-hidden h-2 mb-6 text-xs flex rounded bg-gray-200">
               <div 
                 style={{ width: `${(currentStepIndex / (orderSteps.length - 1)) * 100}%` }} 
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-600 transition-all duration-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600 transition-all duration-500"
               ></div>
             </div>
             
@@ -122,7 +122,7 @@ const OrderDetailsPage = () => {
                 return (
                   <div key={step.id} className="flex flex-col items-center">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      isActive ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-500'
+                      isActive ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-500'
                     }`}>
                       <StepIcon />
                     </div>
@@ -131,7 +131,7 @@ const OrderDetailsPage = () => {
                       <div className="text-xs text-gray-500">Completed</div>
                     )}
                     {index === currentStepIndex && !isCompleted && (
-                      <div className="text-xs text-indigo-600">In Progress</div>
+                      <div className="text-xs text-red-600">In Progress</div>
                     )}
                   </div>
                 );
@@ -158,7 +158,7 @@ const OrderDetailsPage = () => {
           {/* Shipping Information */}
           <div className="md:col-span-1 bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center">
-              <FaMapMarkerAlt className="mr-2 text-indigo-600" /> Shipping Address
+              <FaMapMarkerAlt className="mr-2 text-red-600" /> Shipping Address
             </h2>
             <p className="text-gray-800">
               {order.shippingAddress.name}<br />
@@ -222,7 +222,7 @@ const OrderDetailsPage = () => {
                   <div className="mt-4 flex">
                     <Link 
                       to={`/products/${item.id}`}
-                      className="text-sm text-indigo-600 hover:text-indigo-800"
+                      className="text-sm text-red-600 hover:text-red-800"
                     >
                       View Product
                     </Link>
@@ -238,7 +238,7 @@ const OrderDetailsPage = () => {
           <button className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
             Need Help?
           </button>
-          <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+          <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none">
             Track Package
           </button>
         </div>
