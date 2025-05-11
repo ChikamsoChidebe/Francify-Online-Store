@@ -1,0 +1,137 @@
+/* Category Image Styling */
+.category-image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* Creates a perfect square (1:1 aspect ratio) */
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin: 0 auto;
+}
+/* .category-image{
+  display:flex;
+  width: 100%;
+  height: 50%;
+  border-radius: 50%;
+} */
+
+.category-image-container.small {
+  width: 80px;
+  height: 80px;
+  padding-bottom: 0;
+}
+
+.category-image-container.medium {
+  width: 120px;
+  height: 120px;
+  padding-bottom: 0;
+}
+
+.category-image-container.large {
+  width: 160px;
+  height: 160px;
+  padding-bottom: 0;
+}
+
+/* Inner container for centering content */
+.category-image-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.category-image-container:hover .category-image-inner {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Category icon or image */
+.category-icon {
+  font-size: 2rem;
+  color: #e11d48; /* Red-600 */
+  transition: transform 0.3s ease;
+}
+
+.category-image-container:hover .category-icon {
+  transform: scale(1.1);
+}
+
+/* For actual images instead of icons */
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.category-image-container:hover .category-img {
+  transform: scale(1.1);
+}
+
+/* Discount badge */
+.category-discount-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #e11d48, #9333ea);
+  color: white;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0 0 0 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Category name label */
+.category-name {
+  margin-top: 1rem;
+  font-weight: 500;
+  color: #1f2937; /* Gray-800 */
+  transition: color 0.3s ease;
+}
+
+.category-item:hover .category-name {
+  color: #e11d48; /* Red-600 */
+}
+
+/* Animation for new categories */
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(225, 29, 72, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0);
+  }
+}
+
+.category-image-container.new {
+  animation: pulse-border 2s infinite;
+}
+
+/* Badge for new categories */
+.category-new-badge {
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+  background: #e11d48;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
