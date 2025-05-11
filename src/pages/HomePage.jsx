@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaTruck, FaLock, FaUndo, FaHeadset, FaStar, FaRegStar, FaHeart, FaShoppingCart, FaEye, FaAngleRight, FaGift, FaPercentage, FaShippingFast, FaTag } from 'react-icons/fa';
 import { fetchFeaturedProducts, fetchCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
@@ -16,6 +16,9 @@ const HomePage = () => {
     minutes: 45,
     seconds: 30
   });
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+
 
   useEffect(() => {
     const loadData = async () => {
@@ -89,7 +92,9 @@ const HomePage = () => {
   // Hero section images
   const heroImages = [
     'https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+    'https://cdn.dribbble.com/users/1072089/screenshots/14186832/ecommerce-dribble-shot_4x.jpg',
+    'https://img.freepik.com/premium-vector/big-sale-banner-special-offer-price-label-design-product-discount-festival-tag-design-super-sale_1135545-560.jpg',
+    'https://img.freepik.com/premium-vector/end-off-year-sale-promotion-banner-template-design_19573-791.jpg?w=740',
   ];
 
   // Format countdown number with leading zero
@@ -130,6 +135,15 @@ const HomePage = () => {
       description: 'Dedicated customer service'
     }
   ];
+
+    // Slide change effect
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(slideInterval);
+  }, [heroImages.length]);
 
   return (
     <div>
@@ -219,58 +233,65 @@ const HomePage = () => {
                 </div>
               </motion.div>
             </div>
-            <motion.div 
-              className="hidden md:block relative"
+            {/* <section className="relative bg-gray-100 min-h-[80vh] flex items-center w-screen overflow-hidden">
+        <div className="container mx-auto px-4 max-w-full z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="text-center md:text-left">
+              ... text content unchanged ...
+            </div> */}
+            <motion.div
+              className="hidden md:block relative w-full h-[500px] overflow-hidden rounded-lg shadow-xl"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <img 
-                src={heroImages[0]} 
-                alt="Fashion model" 
-                className="rounded-lg shadow-xl object-cover h-[500px] w-full"
-              />
-              <motion.img 
-                src={heroImages[1]} 
-                alt="Fashion accessories" 
-                className="absolute -bottom-10 -left-10 rounded-lg shadow-xl w-2/3 border-4 border-white"
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              />
+              <AnimatePresence>
+                <motion.img
+                  key={heroImages[currentSlide]}
+                  src={heroImages[currentSlide]}
+                  alt="Hero Slide"
+                  className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                />
+              </AnimatePresence>
               
-              <motion.div 
-                className="absolute top-4 -right-8 bg-white p-4 rounded-lg shadow-lg"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
+
+              
+             <motion.div 
+              className="absolute top-4 -right-[-3px] bg-white p-5 rounded-lg shadow-2xl z-50"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
               >
-                <div className="flex items-center">
-                  <div className="bg-red-100 p-3 rounded-full">
-                    <FaPercentage className="text-red-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-xs text-gray-500">Limited Time</p>
-                    <p className="font-bold text-gray-800">30% OFF</p>
-                  </div>
+              <div className="flex items-center">
+                <div className="bg-red-100 p-4 rounded-full shadow-lg">
+                  <FaPercentage className="text-red-700 text-xl" />
                 </div>
+                <div className="ml-4">
+                  <p className="text-xs text-gray-600">Limited Time</p>
+                  <p className="font-bold text-gray-900 text-lg">30% OFF</p>
+                </div>
+              </div>
               </motion.div>
-              
-              <motion.div 
-                className="absolute -bottom-4 right-10 bg-white p-4 rounded-lg shadow-lg"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
+
+            <motion.div 
+              className="absolute -bottom-[-3px] right-60 bg-white p-5 rounded-lg shadow-2xl z-50"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
               >
-                <div className="flex items-center">
-                  <div className="bg-green-100 p-3 rounded-full">
-                    <FaShippingFast className="text-green-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-xs text-gray-500">All Orders</p>
-                    <p className="font-bold text-gray-800">Free Shipping</p>
-                  </div>
+              <div className="flex items-center">
+                <div className="bg-green-100 p-4 rounded-full shadow-lg">
+                  <FaShippingFast className="text-green-700 text-xl" />
                 </div>
+                <div className="ml-4">
+                  <p className="text-xs text-gray-600">All Orders</p>
+                  <p className="font-bold text-gray-900 text-lg">Free Shipping</p>
+                </div>
+              </div>
               </motion.div>
             </motion.div>
           </div>
