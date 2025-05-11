@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaBars, FaTimes, FaAngleDown, FaGift, FaBell, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaTag, FaHome, FaAngleRight, FaShoppingBag } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -9,12 +9,14 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   // Removed megaMenuOpen state as dropdown will be shown on hover using CSS
   // const [megaMenuOpen, setMegaMenuOpen] = useState(null);
   const { cart } = useCart();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const searchRef = useRef(null);
 
   // Handle scroll effect for header
   useEffect(() => {
@@ -32,14 +34,74 @@ const Header = () => {
     };
   }, []);
 
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   if (searchQuery.trim()) {
+  //     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+  //     setIsSearchOpen(false);
+  //     setSearchQuery('');
+  //   }
+  // };
+
+  // Sample product list for suggestions - replace with API call if needed
+  const sampleProducts = [
+    'Smartphone',
+    'Laptop',
+    'Tablet',
+    'Camera',
+    'Headphones',
+    'Smartwatch',
+    'Shoes',
+    'Jacket',
+    'Backpack',
+    'Sunglasses',
+    'Perfume',
+    'Lipstick',
+    'Blender',
+    'Coffee Maker',
+    'Gaming Console',
+  ];
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setSearchSuggestions([]);
+      return;
+    }
+    const filtered = sampleProducts.filter(product =>
+      product.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchSuggestions(filtered);
+  }, [searchQuery]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
       setSearchQuery('');
+      setSearchSuggestions([]);
     }
   };
+
+  const handleSuggestionClick = (suggestion) => {
+    navigate(`/search?q=${encodeURIComponent(suggestion)}`);
+    setIsSearchOpen(false);
+    setSearchQuery('');
+    setSearchSuggestions([]);
+  };
+
+  // Close suggestions dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchSuggestions([]);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
 
   const cartItemsCount = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -295,29 +357,46 @@ const Header = () => {
             {/* Desktop Icons */}
             <div className="hidden lg:flex items-center space-x-4">
               <motion.div 
-                className="search-bar w-64"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="search-bar w-64 relative"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              ref={searchRef}
+            >
+              <form onSubmit={handleSearch} className="relative">
+                <div className=" unique-suggestions-dropdown bg-black/30 border border-red-500/30 shadow-lg rounded-full overflow-hidden">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full py-2 pl-9 pr-12 bg-transparent focus:outline-none text-white placeholder-gray-300"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => setIsSearchOpen(true)}
+                  />
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-400" />
+                  <button 
+                    type="submit" 
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-600 to-red-800 p-2 rounded-full shadow-md"
+                  >
+                    <FaSearch className="text-white" />
+                  </button>
+                </div>
+              </form>
+
+        {isSearchOpen && searchSuggestions.length > 0 && (
+          <ul className="absolute z-50 mt-1 w-full bg-black/90 rounded-md shadow-lg max-h-60 overflow-y-auto text-white text-sm unique-suggestions-dropdown">
+            {searchSuggestions.map((suggestion, index) => (
+              <li 
+                key={index} 
+                className="px-4 py-2 cursor-pointer hover:bg-red-700 transition-colors"
+                onClick={() => handleSuggestionClick(suggestion)}
               >
-                <form onSubmit={handleSearch} className="relative">
-                  <div className="bg-black/30 border border-red-500/30 shadow-lg rounded-full overflow-hidden">
-                    <input
-                      type="text"
-                      placeholder="Search products..."
-                      className="w-full py-2 pl-9 pr-12 bg-transparent focus:outline-none text-white placeholder-gray-300"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-400" />
-                    <button 
-                      type="submit" 
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-600 to-red-800 p-2 rounded-full shadow-md"
-                    >
-                      <FaSearch className="text-white" />
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+      </motion.div>
+
               
               <motion.div 
                 whileHover={{ scale: 1.2 }} 
