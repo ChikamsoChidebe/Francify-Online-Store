@@ -1,15 +1,23 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaShoppingCart, FaHeart, FaUser } from 'react-icons/fa';
+import { FaHome, FaShoppingCart, FaHeart, FaUser, FaFire } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';
 
 const BottomNavBar = () => {
   const location = useLocation();
+  const { cart, wishlist } = useCart();
+
+  // Calculate total quantity of items in cart
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  // Calculate total items in wishlist
+  const totalWishlistItems = wishlist.length;
 
   const navItems = [
-    { name: 'Home', path: '/', icon: <FaHome size={24} /> },
-    { name: 'Cart', path: '/cart', icon: <FaShoppingCart size={24} /> },
-    { name: 'Wishlist', path: '/wishlist', icon: <FaHeart size={24} /> },
-    { name: 'Profile', path: '/profile', icon: <FaUser size={24} /> },
+    { name: 'Home', path: '/', icon: <FaHome size={20} /> },
+    { name: 'Cart', path: '/cart', icon: <FaShoppingCart size={20} /> },
+    { name: 'Sales', path: '/sale', icon: <FaFire size={20} /> },
+    { name: 'Wishlist', path: '/wishlist', icon: <FaHeart size={20} /> },
+    { name: 'Profile', path: '/profile', icon: <FaUser size={20} /> },
   ];
 
   return (
@@ -32,7 +40,24 @@ const BottomNavBar = () => {
                     : "text-white hover:text-red-500 hover:scale-110")
                 }
               >
-                {icon}
+                <div className="relative">
+                  {icon}
+                  {name === 'Sales' && (
+                    <span className="absolute -top-1 -right-2 bg-gradient-to-r from-yellow-400 via-red-500 to-red-700 text-white text-[10px] font-bold px-1 rounded-full shadow-lg animate-pulse">
+                      Hot
+                    </span>
+                  )}
+                  {name === 'Cart' && totalItems > 0 && (
+                    <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1 rounded-full shadow-lg">
+                      {totalItems}
+                    </span>
+                  )}
+                  {name === 'Wishlist' && totalWishlistItems > 0 && (
+                    <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1 rounded-full shadow-lg">
+                      {totalWishlistItems}
+                    </span>
+                  )}
+                </div>
                 <span className="mt-1">{name}</span>
               </Link>
             </li>
