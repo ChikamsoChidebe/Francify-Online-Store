@@ -1,38 +1,124 @@
-/* Enhanced Product Image Styling */
-.product-image-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px 8px 0 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-  height: 16rem; /* 256px - matches h-64 */
-}
-
-/* 3D Frame Effect */
-.product-image-frame {
-  position: relative;
-  height: 100%;
+/* Fix excessive space and remove bottom scrollbar on CartPage */
+.cart-page-container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  transform-style: preserve-3d;
-  perspective: 1000px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Image Spotlight Effect */
-.image-spotlight {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.4) 30%,
-    transparent 70%
-  );
-  opacity: 0.7;
-  pointer-events: none;
-  z-index: 2;
+/* Prevent horizontal scroll on body */
+body {
+  overflow-x: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .cart-page-container {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+/* Order summary coupon section responsiveness */
+.order-summary-coupon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.order-summary-coupon input[type="text"] {
+  flex-grow: 1;
+  min-width: 150px;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 0.375rem 0 0 0.375rem; /* rounded-l */
+  outline: none;
+}
+
+.order-summary-coupon button {
+  padding: 0.5rem 1rem;
+  background-color: #e53e3e; /* red-600 */
+  color: white;
+  border-radius: 0 0.375rem 0.375rem 0; /* rounded-r */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.order-summary-coupon button:hover {
+  background-color: #c53030; /* red-700 */
+}
+
+/* Payment method images responsiveness */
+.order-summary-payment-methods {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.order-summary-payment-methods img {
+  height: 1.5rem; /* 6 */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .order-summary-coupon {
+    flex-direction: column;
+  }
+  .order-summary-coupon input[type="text"],
+  .order-summary-coupon button {
+    border-radius: 0.375rem;
+    width: 100%;
+  }
+  .order-summary-payment-methods {
+    gap: 0.5rem;
+  }
+}
+
+/* Responsive wrapper for cart items table */
+.cart-items-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure table cells do not collapse or hide content */
+.cart-items-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* minimum width to allow horizontal scroll on small screens */
+}
+
+/* Responsive order summary container */
+.order-summary-container {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* On large screens, order summary stays in its grid column */
+@media (min-width: 1024px) {
+  .order-summary-container {
+    margin-top: 0;
+  }
+}
+
+/* Optional: Adjust padding and font size for smaller screens */
+@media (max-width: 640px) {
+  .cart-items-table-wrapper th,
+  .cart-items-table-wrapper td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  .order-summary-container {
+    padding: 1rem;
+}
 }
 
 /* Image Container */
@@ -676,8 +762,30 @@
   background: linear-gradient(to right, #f9fafb, #d1d5db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Responsive table wrapper for WishlistPage */
+.wishlist-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* Ensure table cells do not collapse or hide content */
+.wishlist-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* minimum width to allow horizontal scroll on small screens */
+}
+
+/* Optional: Adjust padding and font size for smaller screens */
+@media (max-width: 640px) {
+  .wishlist-table-wrapper th,
+  .wishlist-table-wrapper td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
 .footer-description {
   color: #9ca3af;
   margin-bottom: 1.5rem;

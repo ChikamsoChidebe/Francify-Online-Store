@@ -34,7 +34,7 @@ const WishlistPage = () => {
     <div className="container mx-auto px-4 py-24">
       <h1 className="text-3xl font-bold mb-8">My Wishlist</h1>
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="wishlist-table-wrapper bg-white rounded-lg shadow-md overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

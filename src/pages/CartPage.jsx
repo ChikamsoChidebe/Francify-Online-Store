@@ -76,7 +76,7 @@ const CartPage = () => {
   }
   
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="cart-page-container container mx-auto px-4 py-16" >
       <h1 className="text-3xl font-bold mb-8">Your Shopping Cart</h1>
       
       {/* Delete Confirmation Modal */}
@@ -105,10 +105,10 @@ const CartPage = () => {
         </div>
       )}
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 cart-page-container">
         {/* Cart Items */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden cart-items-table-wrapper">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -304,7 +304,7 @@ const CartPage = () => {
         </div>
         
         {/* Order Summary */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 ">
           <motion.div 
             className="bg-white rounded-lg shadow-md p-6"
             initial={{ opacity: 0, y: 20 }}
@@ -362,7 +362,7 @@ const CartPage = () => {
             </div>
             
             {/* Coupon Code */}
-            <div className="mt-6">
+            <div className="mt-6 order-summary-coupon " >
               <h3 className="text-sm font-medium text-gray-900 mb-2">Have a coupon?</h3>
               <div className="flex">
                 <input
