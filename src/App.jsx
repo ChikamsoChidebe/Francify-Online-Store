@@ -7,6 +7,7 @@ import { useAuth } from './context/AuthContext';
 // Layout Components
 import Header from './components/Header';
 import Footer from './components/Footer';
+import BottomNavBar from './components/BottomNavBar';
 
 // Pages
 import AdminPage from './pages/AdminPage';
@@ -114,6 +115,7 @@ function App() {
               </Routes>
             </main>
             <Footer />
+            <BottomNavBar />
           </div>
         </CartProvider>
       </AuthProvider>

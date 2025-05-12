@@ -21,7 +21,7 @@ const WishlistPage = () => {
           </p>
           <Link 
             to="/products" 
-            className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
+            className="inline-flex items-center bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition"
           >
             <FaArrowLeft className="mr-2" /> Browse Products
           </Link>
@@ -66,7 +66,7 @@ const WishlistPage = () => {
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
-                        <Link to={`/products/${item.id}`} className="hover:text-indigo-600">
+                        <Link to={`/products/${item.id}`} className="hover:text-red-600">
                           {item.name}
                         </Link>
                       </div>
@@ -88,7 +88,7 @@ const WishlistPage = () => {
                   <div className="flex justify-end space-x-2">
                     <button 
                       onClick={() => handleAddToCart(item)}
-                      className="text-indigo-600 hover:text-indigo-900 flex items-center"
+                      className="text-red-600 hover:text-red-900 flex items-center"
                     >
                       <FaShoppingCart className="mr-1" /> Add to Cart
                     </button>
@@ -109,7 +109,7 @@ const WishlistPage = () => {
       <div className="mt-8 flex justify-between">
         <Link 
           to="/products" 
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800"
+          className="inline-flex items-center text-red-600 hover:text-red-800"
         >
           <FaArrowLeft className="mr-2" /> Continue Shopping
         </Link>
@@ -122,7 +122,7 @@ const WishlistPage = () => {
                 removeFromWishlist(item.id);
               });
             }}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
+            className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition"
           >
             Add All to Cart
           </button>
