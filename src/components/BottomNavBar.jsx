@@ -37,7 +37,7 @@ const BottomNavBar = () => {
       className="fixed bottom-0 left-0 right-0 z-50 block md:hidden bg-gradient-to-r from-black via-red-900 to-red-700 backdrop-blur-md border-t border-gray-700 animate-slideIn"
       aria-label="Bottom navigation"
     >
-      <ul className="flex justify-around max-w-md mx-auto">
+      <ul className="flex justify-around w-full">
         {navItems.map(({ name, path, icon }) => {
           const isActive = location.pathname === path;
           if (name === 'Profile') {
