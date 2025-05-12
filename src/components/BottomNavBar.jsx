@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaHome, FaShoppingCart, FaHeart, FaUser, FaFire } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 const BottomNavBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { cart, wishlist } = useCart();
+  const { currentUser } = useAuth();
 
   // Calculate total quantity of items in cart
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -20,6 +23,15 @@ const BottomNavBar = () => {
     { name: 'Profile', path: '/profile', icon: <FaUser size={20} /> },
   ];
 
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    if (currentUser) {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <nav
       className="fixed bottom-0 left-0 right-0 z-50 block md:hidden bg-gradient-to-r from-black via-red-900 to-red-700 backdrop-blur-md border-t border-gray-700 animate-slideIn"
@@ -28,6 +40,28 @@ const BottomNavBar = () => {
       <ul className="flex justify-around max-w-md mx-auto">
         {navItems.map(({ name, path, icon }) => {
           const isActive = location.pathname === path;
+          if (name === 'Profile') {
+            return (
+              <li key={name} className="flex-1">
+                <a
+                  href="/profile"
+                  aria-label={name}
+                  onClick={handleProfileClick}
+                  className={
+                    "flex flex-col items-center justify-center py-2 text-sm transition-transform duration-300 " +
+                    (isActive
+                      ? "text-red-500 scale-110"
+                      : "text-white hover:text-red-500 hover:scale-110")
+                  }
+                >
+                  <div className="relative">
+                    {icon}
+                  </div>
+                  <span className="mt-1">{name}</span>
+                </a>
+              </li>
+            );
+          }
           return (
             <li key={name} className="flex-1">
               <Link
