@@ -13,7 +13,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   // Removed megaMenuOpen state as dropdown will be shown on hover using CSS
   // const [megaMenuOpen, setMegaMenuOpen] = useState(null);
-  const { cart } = useCart();
+  const { cart, wishlist } = useCart();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const searchRef = useRef(null);
@@ -406,6 +406,16 @@ const Header = () => {
                 <Link to="/wishlist" className="relative">
                   <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
                     <FaHeart className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
+                    {wishlist.length > 0 && (
+                      <motion.span 
+                        className="absolute -top-2 -right-2 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium shadow-md"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 10 }}
+                      >
+                        {wishlist.length}
+                      </motion.span>
+                    )}
                   </div>
                 </Link>
               </motion.div>
