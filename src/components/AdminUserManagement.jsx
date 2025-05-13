@@ -50,18 +50,18 @@ const AdminUserManagement = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-r from-red-900 via-black to-red-900 min-h-screen text-red-300 rounded-lg shadow-lg overflow-x-auto">
-      <h2 className="text-3xl font-bold mb-6 text-white">User Management</h2>
+<div className="p-6 bg-gradient-to-br from-gray-100 via-white to-gray-100 min-h-screen text-gray-900 rounded-lg shadow-lg overflow-x-auto">
+      <h2 className="text-3xl font-bold mb-6 text-gray-900">User Management</h2>
       <input
         type="text"
         placeholder="Search users by name or email"
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 rounded w-full text-black"
+        className="mb-4 p-2 rounded w-full text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
       />
       <table className="w-full text-left border-collapse min-w-[600px]">
         <thead>
-          <tr className="border-b border-red-700">
+          <tr className="border-b border-red-500">
             <th className="py-2 px-4">Name</th>
             <th className="py-2 px-4">Email</th>
             <th className="py-2 px-4">Role</th>
@@ -71,14 +71,14 @@ const AdminUserManagement = () => {
         </thead>
         <tbody>
           {currentUsers.map(user => (
-            <tr key={user.id} className="border-b border-red-700 hover:bg-red-800">
+            <tr key={user.id} className="border-b border-red-500 hover:bg-red-100">
               <td className="py-2 px-4">{user.name}</td>
               <td className="py-2 px-4">{user.email}</td>
               <td className="py-2 px-4">
                 <select
                   value={user.role}
                   onChange={e => handleRoleChange(user.id, e.target.value)}
-                  className="bg-black text-red-300 p-1 rounded"
+                  className="bg-white text-primary-600 p-1 rounded border border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   {roles.map(role => (
                     <option key={role} value={role}>{role}</option>
@@ -90,7 +90,7 @@ const AdminUserManagement = () => {
                 <button
                   onClick={() => toggleStatus(user.id)}
                   className={`px-3 py-1 rounded ${
-                    user.status === 'active' ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-600 hover:bg-gray-700'
+                    user.status === 'active' ? 'bg-red-500 hover:bg-red-600' : 'bg-gray-300 hover:bg-gray-400'
                   } text-white`}
                 >
                   {user.status === 'active' ? 'Deactivate' : 'Activate'}
@@ -106,7 +106,7 @@ const AdminUserManagement = () => {
             key={i + 1}
             onClick={() => setCurrentPage(i + 1)}
             className={`px-3 py-1 rounded ${
-              currentPage === i + 1 ? 'bg-red-700 text-white' : 'bg-red-900 text-red-300'
+              currentPage === i + 1 ? 'bg-red-500 text-white' : 'bg-red-300 text-primary-600'
             }`}
           >
             {i + 1}

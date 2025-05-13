@@ -53,12 +53,12 @@ const AdminSettings = () => {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-r from-red-900 via-black to-red-900 min-h-screen text-red-300 rounded-lg shadow-lg max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-white">Admin Settings</h2>
+<div className="p-6 bg-gradient-to-br from-gray-100 via-white to-gray-100 min-h-screen text-gray-900 rounded-lg shadow-lg max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold mb-6 text-gray-900">Admin Settings</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Payment Options */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-white">Payment Options</h3>
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">Payment Options</h3>
           <div className="flex flex-wrap space-x-4 space-y-2">
             {paymentOptionsList.map(option => (
               <label key={option} className="flex items-center space-x-2">
@@ -66,7 +66,7 @@ const AdminSettings = () => {
                   type="checkbox"
                   checked={paymentOptions[option]}
                   onChange={() => handlePaymentChange(option)}
-                  className="form-checkbox h-5 w-5 text-red-600"
+                  className="form-checkbox h-5 w-5 text-red-500"
                 />
                 <span>{option}</span>
               </label>
@@ -76,7 +76,7 @@ const AdminSettings = () => {
 
         {/* Shipping Methods */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-white">Shipping Methods</h3>
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">Shipping Methods</h3>
           <div className="flex flex-wrap space-x-4 space-y-2">
             {shippingMethodsList.map(method => (
               <label key={method} className="flex items-center space-x-2">
@@ -84,7 +84,7 @@ const AdminSettings = () => {
                   type="checkbox"
                   checked={shippingMethods[method]}
                   onChange={() => handleShippingChange(method)}
-                  className="form-checkbox h-5 w-5 text-red-600"
+                  className="form-checkbox h-5 w-5 text-red-500"
                 />
                 <span>{method}</span>
               </label>
@@ -94,7 +94,7 @@ const AdminSettings = () => {
 
         {/* Tax Settings */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-white">Tax Settings (%)</h3>
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">Tax Settings (%)</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md">
             {taxRegionsList.map(region => (
               <div key={region} className="flex items-center space-x-2">
@@ -103,7 +103,7 @@ const AdminSettings = () => {
                   type="number"
                   value={taxSettings[region]}
                   onChange={(e) => handleTaxChange(region, e.target.value)}
-                  className="w-20 p-1 rounded text-black"
+                  className="w-20 p-1 rounded border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   min="0"
                   max="100"
                 />
@@ -114,13 +114,13 @@ const AdminSettings = () => {
 
         {/* Notification Preferences */}
         <div>
-          <h3 className="text-xl font-semibold mb-2 text-white">Notification Preferences</h3>
+          <h3 className="text-xl font-semibold mb-2 text-gray-900">Notification Preferences</h3>
           <label className="flex items-center space-x-2">
             <input
               type="checkbox"
               checked={notifications.emailAlerts}
               onChange={() => handleNotificationChange('emailAlerts')}
-              className="form-checkbox h-5 w-5 text-red-600"
+              className="form-checkbox h-5 w-5 text-red-500"
             />
             <span>Email Alerts</span>
           </label>
@@ -129,7 +129,7 @@ const AdminSettings = () => {
               type="checkbox"
               checked={notifications.smsAlerts}
               onChange={() => handleNotificationChange('smsAlerts')}
-              className="form-checkbox h-5 w-5 text-red-600"
+              className="form-checkbox h-5 w-5 text-red-500"
             />
             <span>SMS Alerts</span>
           </label>
@@ -137,7 +137,7 @@ const AdminSettings = () => {
 
         <button
           type="submit"
-          className="px-6 py-2 bg-gradient-to-r from-red-600 via-red-800 to-black text-white font-semibold rounded shadow hover:from-red-700 hover:via-red-900 hover:to-black transition"
+          className="px-6 py-2 bg-gradient-to-r from-primary-400 via-primary-600 to-accent-900 text-black font-semibold rounded shadow hover:from-primary-500 hover:via-primary-700 hover:to-accent-900 transition"
         >
           Save Settings
         </button>

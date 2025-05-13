@@ -7,28 +7,29 @@ const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-900 via-black to-red-900 text-red-300 p-4 md:p-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">Admin Dashboard</h1>
-      <div className="flex flex-col md:flex-row justify-center md:space-x-6 space-y-4 md:space-y-0 mb-8">
-        <button
-          className={`px-4 py-2 rounded-md font-semibold ${
-            activeTab === 'users' ? 'bg-red-700 text-white' : 'bg-red-900 hover:bg-red-700'
-          }`}
-          onClick={() => setActiveTab('users')}
+<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-900 p-4 md:p-8">
+      <div className="w-full max-w-5xl">
+        <h1 className="text-4xl font-bold mb-6 text-center">Admin Dashboard</h1>
+        <div className="flex flex-col md:flex-row justify-center md:space-x-6 space-y-4 md:space-y-0 mb-8">
+          <button
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
+              activeTab === 'users' ? 'bg-red-600 text-white' : 'bg-red-400 hover:bg-primary-600 text-gray-900'
+            }`}
+            onClick={() => setActiveTab('users')}
         >
           User Management
         </button>
         <button
-          className={`px-4 py-2 rounded-md font-semibold ${
-            activeTab === 'products' ? 'bg-red-700 text-white' : 'bg-red-900 hover:bg-red-700'
+          className={`px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
+            activeTab === 'products' ? 'bg-red-600 text-white' : 'bg-red-400 hover:bg-primary-600 text-gray-900'
           }`}
           onClick={() => setActiveTab('products')}
         >
           Product Management
         </button>
         <button
-          className={`px-4 py-2 rounded-md font-semibold ${
-            activeTab === 'settings' ? 'bg-red-700 text-white' : 'bg-red-900 hover:bg-red-700'
+          className={`px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
+            activeTab === 'settings' ? 'bg-red-600 text-white' : 'bg-red-400 hover:bg-primary-600 text-gray-900'
           }`}
           onClick={() => setActiveTab('settings')}
         >
@@ -42,6 +43,8 @@ const AdminPage = () => {
         {activeTab === 'settings' && <AdminSettings />}
       </div>
     </div>
+
+</div>
   );
 };
 
