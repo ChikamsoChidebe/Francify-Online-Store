@@ -39,6 +39,7 @@ import Shipping from './pages/Shipping';
 import FAQ from './pages/FAQ';
 import LoadingSpinner from './components/LoadingSpinner';
 import WarrantySupportPage from './pages/WarrantySupportPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 const AdminRoute = ({ children }) => {
   const { currentUser, isAdmin } = useAuth();
@@ -100,6 +101,7 @@ function App() {
                 <Route path="/notifications" element={<NotificationsPage />} />
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/track-order" element={<TrackOrderPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="*" element={<NotFoundPage />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Terms />} />
@@ -111,7 +113,7 @@ function App() {
                   <AdminPage />
                 </AdminRoute>
               } />
-              {/* fallback or other routes */}
+              {/* fallback or other routes */} 
               </Routes>
             </main>
             <Footer />
