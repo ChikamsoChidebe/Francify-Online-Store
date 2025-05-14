@@ -183,7 +183,7 @@ const ProductsPage = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="appearance-none bg-white pl-4 pr-10 py-2 rounded-md shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="appearance-none bg-white pl-4 pr-10 py-2 rounded-md shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500"
             >
               {sortOptions.map(option => (
                 <option key={option.value} value={option.value}>
@@ -204,7 +204,7 @@ const ProductsPage = () => {
               <h2 className="text-lg font-semibold">Filters</h2>
               <button
                 onClick={clearFilters}
-                className="text-sm text-indigo-600 hover:text-indigo-800"
+                className="text-sm text-red-600 hover:text-red-800"
               >
                 Clear All
               </button>
@@ -222,7 +222,7 @@ const ProductsPage = () => {
                       name="category"
                       checked={filters.category === category || (!filters.category && category === 'All Categories')}
                       onChange={() => handleFilterChange('category', category === 'All Categories' ? '' : category)}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 text-red-600 focus:ring-red-500"
                     />
                     <label htmlFor={`category-${index}`} className="ml-2 text-sm text-gray-700">
                       {category}
@@ -244,7 +244,7 @@ const ProductsPage = () => {
                       name="price"
                       checked={filters.priceRange === range.value}
                       onChange={() => handleFilterChange('priceRange', range.value)}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 text-red-600 focus:ring-red-500"
                     />
                     <label htmlFor={`price-${index}`} className="ml-2 text-sm text-gray-700">
                       {range.label}
@@ -266,7 +266,7 @@ const ProductsPage = () => {
                       name="rating"
                       checked={filters.rating === rating.value}
                       onChange={() => handleFilterChange('rating', rating.value)}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 text-red-600 focus:ring-red-500"
                     />
                     <label htmlFor={`rating-${index}`} className="ml-2 text-sm text-gray-700 flex items-center">
                       {rating.value ? (
@@ -295,7 +295,7 @@ const ProductsPage = () => {
                       name="availability"
                       checked={filters.availability === option.value}
                       onChange={() => handleFilterChange('availability', option.value)}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      className="h-4 w-4 text-red-600 focus:ring-red-500"
                     />
                     <label htmlFor={`availability-${index}`} className="ml-2 text-sm text-gray-700">
                       {option.label}
@@ -325,7 +325,7 @@ const ProductsPage = () => {
               <p className="text-gray-600 mb-6">Try adjusting your filters or search criteria.</p>
               <button
                 onClick={clearFilters}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
               >
                 Clear Filters
               </button>
