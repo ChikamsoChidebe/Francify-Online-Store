@@ -8,6 +8,7 @@ import { useAuth } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BottomNavBar from './components/BottomNavBar';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import AdminPage from './pages/AdminPage';
@@ -75,6 +76,7 @@ function App() {
     <Router>
       <AuthProvider>
         <CartProvider>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-grow">

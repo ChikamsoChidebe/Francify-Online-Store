@@ -12,10 +12,11 @@ const ProductCard = ({ product }) => {
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useCart();
   const inWishlist = isInWishlist(product.id);
   const price = typeof product.price === 'number' ? product.price : parseFloat(product.price);
-const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
+  const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
 
   const [isHovered, setIsHovered] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [showAddedNotification, setShowAddedNotification] = useState(false);
 
   const handleWishlistToggle = (e) => {
     e.preventDefault();
@@ -29,7 +30,17 @@ const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
   const handleAddToCart = (e) => {
     e.preventDefault();
     addToCart(product);
+    setShowAddedNotification(true);
   };
+
+  useEffect(() => {
+    if (showAddedNotification) {
+      const timer = setTimeout(() => {
+        setShowAddedNotification(false);
+      }, 2000); // notification visible for 2 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [showAddedNotification]);
 
   const handleQuickView = (e) => {
     e.preventDefault();
@@ -57,14 +68,14 @@ const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
 
   return (
     <motion.div 
-      className="product-card group bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden"
+      className="product-card group bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col h-full relative"
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative">
-        {/* Product badges */}
+      <div className="relative flex-grow">
+        {/* Product badges */} 
         <div className="product-badge absolute top-3 left-3 z-10 flex flex-col gap-2">
           {product.isNew && (
             <motion.span 
@@ -202,7 +213,7 @@ const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
       </div>
 
       {/* Product info */}
-      <div className="product-info p-4">
+      <div className="product-info p-4 flex-grow flex flex-col">
         {/* Category */}
         <div className="product-category text-xs text-gray-500 uppercase tracking-wider mb-1">{product.category}</div>
         
@@ -258,6 +269,7 @@ const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
             <span className="out-of-stock text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Out of Stock</span>
           )}
         </div>
+        <div className="mt-auto"></div>
       </div>
 
       {/* Quick buy button */}
@@ -278,6 +290,13 @@ const displayPrice = isNaN(price) ? 'N/A' : price.toFixed(2);
           )}
         </motion.button>
       </div>
+
+      {/* Added to cart notification */}
+      {showAddedNotification && (
+        <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded shadow-lg z-50 animate-fadeInOut">
+          Added to cart
+        </div>
+      )}
     </motion.div>
   );
 };

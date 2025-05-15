@@ -483,23 +483,23 @@ const HomePage = () => {
             </Link>
           </div>
           
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-4 animate-pulse">
-                  <div className="bg-gray-300 h-64 rounded-md mb-4"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-2 w-3/4"></div>
-                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {featuredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+            {loading ? (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {[...Array(4)].map((_, index) => (
+                  <div key={index} className="bg-white rounded-lg shadow-md p-4 animate-pulse">
+                    <div className="bg-gray-300 h-64 rounded-md mb-4"></div>
+                    <div className="h-4 bg-gray-300 rounded mb-2 w-3/4"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {featuredProducts.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            )}
         </div>
       </section>
 

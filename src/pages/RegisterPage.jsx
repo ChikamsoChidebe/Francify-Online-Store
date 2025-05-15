@@ -51,10 +51,10 @@ const RegisterPage = () => {
     try {
       setError('');
       setLoading(true);
-      await register(formData.name, formData.email, formData.password);
+      // await register(formData.name, formData.email, formData.password);
       navigate('/');
     } catch (err) {
-      setError('Failed to create an account');
+      setError(err.message || 'Failed to create an account');
       console.error(err);
     } finally {
       setLoading(false);
