@@ -8,7 +8,7 @@ const RegisterPage = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    // confirmPassword: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,15 +25,15 @@ const RegisterPage = () => {
   };
 
   const validateForm = () => {
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.name || !formData.email || !formData.password ) {
       setError('All fields are required');
       return false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
-    }
+    // if (formData.password !== formData.confirmPassword) {
+    //   setError('Passwords do not match');
+    //   return false;
+    // }
 
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
@@ -49,8 +49,19 @@ const RegisterPage = () => {
     if (!validateForm()) return;
 
     try {
+       const response = await fetch('http://localhost:4000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       setError('');
       setLoading(true);
+
+      const data = await response.json()
+      console.log(data)
+
       // await register(formData.name, formData.email, formData.password);
       navigate('/');
     } catch (err) {
