@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaApple } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 
@@ -9,11 +9,19 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/';
+useEffect(() => {
+  console.log('useEffect triggered with currentUser:', currentUser);
+  if (currentUser) {
+    navigate(`/profile`, { replace: true });
+  }
+}, [currentUser, navigate]);
+
+console.log('Current user:', currentUser);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +35,6 @@ const LoginPage = () => {
       setError('');
       setLoading(true);
       await login(email, password);
-      navigate(from, { replace: true });
     } catch (err) {
       setError('Failed to sign in. Please check your credentials.');
       console.error(err);
@@ -94,30 +101,6 @@ const LoginPage = () => {
                 </div>
               );
             })}
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-primary-500 focus:ring-primary-400 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-primary-300 select-none">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <Link
-                to="/forgot-password"
-                className="font-semibold text-secondary-600 hover:text-secondary-500 transition-colors duration-300 underline underline-offset-4 hover:underline-offset-2 animate-pulse"
-                aria-label="Forgot your password? Click to reset"
-              >
-                Forgot your password?
-              </Link>
-            </div>
           </div>
 
           <div>
