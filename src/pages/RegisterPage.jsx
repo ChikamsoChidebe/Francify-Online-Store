@@ -48,6 +48,7 @@ const RegisterPage = () => {
 
     if (!validateForm()) return;
 
+    setLoading(true);
     try {
        const response = await fetch('http://localhost:4000/signup', {
         method: 'POST',
@@ -56,11 +57,18 @@ const RegisterPage = () => {
         },
         body: JSON.stringify(formData),
       });
-      setError('');
-      setLoading(true);
 
-      const data = await response.json()
-      console.log(data)
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to create an account');
+        setLoading(false);
+        return;
+      }
+
+      setError('');
+
+      const data = await response.json();
+      console.log(data);
 
       // await register(formData.name, formData.email, formData.password);
       navigate('/');
