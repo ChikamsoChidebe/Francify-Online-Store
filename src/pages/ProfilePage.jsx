@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLock, FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
@@ -23,6 +23,22 @@ const ProfilePage = () => {
   });
   
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  useEffect(() => {
+    setFormData({
+      name: currentUser?.name || '',
+      email: currentUser?.email || '',
+      phone: currentUser?.phone || '',
+      address: currentUser?.address || '',
+      city: currentUser?.city || '',
+      state: currentUser?.state || '',
+      zipCode: currentUser?.zipCode || '',
+      country: currentUser?.country || 'USA',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    });
+  }, [currentUser]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,11 +48,38 @@ const ProfilePage = () => {
     }));
   };
   
-  const handlePersonalInfoSubmit = (e) => {
+  const { updateProfile } = useAuth();
+
+  const handlePersonalInfoSubmit = async (e) => {
     e.preventDefault();
-    // This would normally connect to a backend API
-    // For demo purposes, we'll just show a success message
-    setMessage({ type: 'success', text: 'Personal information updated successfully!' });
+    try {
+      const updatedData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode,
+        country: formData.country,
+      };
+      const data = await updateProfile(updatedData);
+      setMessage({ type: 'success', text: 'Personal information updated successfully!' });
+      // Update formData with returned user data to reflect saved changes
+      setFormData(prev => ({
+        ...prev,
+        name: data.user.name,
+        email: data.user.email,
+        phone: data.user.phone || '',
+        address: data.user.address || '',
+        city: data.user.city || '',
+        state: data.user.state || '',
+        zipCode: data.user.zipCode || '',
+        country: data.user.country || 'USA',
+      }));
+    } catch (error) {
+      setMessage({ type: 'error', text: error.message || 'Failed to update profile' });
+    }
     
     // Clear message after 3 seconds
     setTimeout(() => {
@@ -96,7 +139,7 @@ const ProfilePage = () => {
           <div className="md:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex flex-col items-center mb-6">
-                <div className="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                <div className="w-24 h-24 rounded-full bg-red-100 flex items-center justify-center mb-4">
                   {currentUser.avatar ? (
                     <img 
                       src={currentUser.avatar} 
@@ -104,7 +147,7 @@ const ProfilePage = () => {
                       className="w-full h-full rounded-full object-cover"
                     />
                   ) : (
-                    <FaUser className="text-indigo-600 text-4xl" />
+                    <FaUser className="text-red-600 text-4xl" />
                   )}
                 </div>
                 <h2 className="text-xl font-semibold">{currentUser.name}</h2>
@@ -116,7 +159,7 @@ const ProfilePage = () => {
                   onClick={() => setActiveTab('personal')}
                   className={`w-full flex items-center px-4 py-2 rounded-md ${
                     activeTab === 'personal' 
-                      ? 'bg-indigo-600 text-white' 
+                      ? 'bg-red-600 text-white' 
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
@@ -126,7 +169,7 @@ const ProfilePage = () => {
                   onClick={() => setActiveTab('orders')}
                   className={`w-full flex items-center px-4 py-2 rounded-md ${
                     activeTab === 'orders' 
-                      ? 'bg-indigo-600 text-white' 
+                      ? 'bg-red-600 text-white' 
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
@@ -136,12 +179,20 @@ const ProfilePage = () => {
                   onClick={() => setActiveTab('security')}
                   className={`w-full flex items-center px-4 py-2 rounded-md ${
                     activeTab === 'security' 
-                      ? 'bg-indigo-600 text-white' 
+                      ? 'bg-red-600 text-white' 
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   <FaLock className="mr-3" /> Security
                 </button>
+                {currentUser.role === 'Admin' && (
+                  <button
+                    onClick={() => navigate('/admin')}
+                    className="w-full flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition"
+                  >
+                    <FaUser className="mr-3" /> Admin Dashboard
+                  </button>
+                )}
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center px-4 py-2 rounded-md text-red-600 hover:bg-red-50"
@@ -180,7 +231,7 @@ const ProfilePage = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -193,7 +244,7 @@ const ProfilePage = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -206,7 +257,7 @@ const ProfilePage = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                     </div>
@@ -223,7 +274,7 @@ const ProfilePage = () => {
                           name="address"
                           value={formData.address}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -236,7 +287,7 @@ const ProfilePage = () => {
                           name="city"
                           value={formData.city}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -249,7 +300,7 @@ const ProfilePage = () => {
                           name="state"
                           value={formData.state}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -262,7 +313,7 @@ const ProfilePage = () => {
                           name="zipCode"
                           value={formData.zipCode}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                       <div>
@@ -274,7 +325,7 @@ const ProfilePage = () => {
                           name="country"
                           value={formData.country}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                         >
                           <option value="USA">United States</option>
                           <option value="CAN">Canada</option>
@@ -289,7 +340,7 @@ const ProfilePage = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
+                        className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition"
                       >
                         Save Changes
                       </button>
@@ -342,7 +393,7 @@ const ProfilePage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button 
                               onClick={() => navigate('/orders/ORD-12345')}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-red-600 hover:text-red-900"
                             >
                               View
                             </button>
@@ -366,7 +417,7 @@ const ProfilePage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button 
                               onClick={() => navigate('/orders/ORD-67890')}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-red-600 hover:text-red-900"
                             >
                               View
                             </button>
@@ -394,7 +445,7 @@ const ProfilePage = () => {
                           name="currentPassword"
                           value={formData.currentPassword}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                           required
                         />
                       </div>
@@ -408,7 +459,7 @@ const ProfilePage = () => {
                           name="newPassword"
                           value={formData.newPassword}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                           required
                         />
                       </div>
@@ -422,7 +473,7 @@ const ProfilePage = () => {
                           name="confirmPassword"
                           value={formData.confirmPassword}
                           onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-red-500 focus:border-red-500"
                           required
                         />
                       </div>
@@ -431,7 +482,7 @@ const ProfilePage = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
+                        className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition"
                       >
                         Update Password
                       </button>

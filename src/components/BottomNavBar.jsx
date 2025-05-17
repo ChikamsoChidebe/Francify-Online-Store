@@ -50,7 +50,7 @@ const BottomNavBar = () => {
                   className={
                     "flex flex-col items-center justify-center py-2 text-sm transition-transform duration-300 " +
                     (isActive
-                      ? "text-red-500 scale-110"
+                      ? "text-red-600 scale-110"
                       : "text-white hover:text-red-500 hover:scale-110")
                   }
                 >
@@ -70,7 +70,7 @@ const BottomNavBar = () => {
                 className={
                   "flex flex-col items-center justify-center py-2 text-sm transition-transform duration-300 " +
                   (isActive
-                    ? "text-red-500 scale-110"
+                    ? "text-red-600 scale-110"
                     : "text-white hover:text-red-500 hover:scale-110")
                 }
               >

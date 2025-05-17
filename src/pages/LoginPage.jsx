@@ -15,7 +15,11 @@ const LoginPage = () => {
 useEffect(() => {
   console.log('useEffect triggered with currentUser:', currentUser);
   if (currentUser) {
-    navigate(`/profile`, { replace: true });
+    if (currentUser.role === 'Admin') {
+      navigate('/admin', { replace: true });
+    } else {
+      navigate('/profile', { replace: true });
+    }
   }
 }, [currentUser, navigate]);
 
@@ -42,6 +46,7 @@ console.log('Current user:', currentUser);
       setLoading(false);
     }
   };
+  
 
   return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-100 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">

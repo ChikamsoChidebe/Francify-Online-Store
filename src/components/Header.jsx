@@ -14,7 +14,9 @@ const Header = () => {
   // Removed megaMenuOpen state as dropdown will be shown on hover using CSS
   // const [megaMenuOpen, setMegaMenuOpen] = useState(null);
   const { cart, wishlist } = useCart();
-  const { currentUser } = useAuth();
+  const { currentUser, isAdmin } = useAuth();
+  console.log('Header currentUser:', currentUser);
+  console.log('Header isAdmin:', isAdmin());
   const navigate = useNavigate();
   const searchRef = useRef(null);
 
@@ -250,7 +252,7 @@ const Header = () => {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-6">
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
-                <Link to="/" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">Home</Link>
+                <Link to="/" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full">Home</Link>
               </motion.div>
               
               <motion.div 
@@ -258,7 +260,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }} 
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
-                <Link to="/sale" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">
+                <Link to="/sale" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full">
                   <span className="relative">
                     Sale
                     <span className="absolute -top-2 -right-6 bg-gradient-to-r from-yellow-500 to-red-500 text-white text-xs px-2 py-0.5 rounded-full shadow-glow animate-pulse">Hot</span>
@@ -274,7 +276,7 @@ const Header = () => {
     whileHover={{ scale: 1.05 }} 
     transition={{ type: "spring", stiffness: 400, damping: 15 }}
   >
-    <button className="nav-link flex items-center text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">
+    <button className="nav-link flex items-center text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full">
       {category.name} <FaAngleDown className="ml-1" />
     </button>
     
@@ -299,7 +301,7 @@ const Header = () => {
                       to={`/category/${subcat.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-red-700 hover:text-red-900 transition-colors flex items-center py-2 font-semibold"
                     >
-                      <span className="w-2 h-2 bg-red-400 rounded-full mr-3 shadow-md"></span>
+                      <span className="w-2 h-2 bg-red-600 rounded-full mr-3 shadow-md"></span>
                       {subcat}
                     </Link>
                   </motion.div>
@@ -349,7 +351,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }} 
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
-                <Link to="/products" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-400 after:transition-all hover:after:w-full">All Products</Link>
+                <Link to="/products" className="nav-link text-lg font-medium text-white relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full">All Products</Link>
               </motion.div>
 
             </nav>
@@ -447,20 +449,22 @@ const Header = () => {
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                {currentUser ? (
+              {currentUser ? (
+                <>
                   <Link to="/profile" className="relative">
                     <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
                       <FaUser className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
                     </div>
                   </Link>
-                ) : (
-                  <Link to="/login" className="relative">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
-                      <FaUser className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
-                    </div>
-                  </Link>
-                )}
-              </motion.div>
+                </>
+              ) : (
+                <Link to="/login" className="relative">
+                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors duration-300 group">
+                    <FaUser className="text-gray-600 group-hover:text-red-600 transition-colors duration-300" size={18} />
+                  </div>
+                </Link>
+              )}
+            </motion.div>
               
               <motion.div 
                 whileHover={{ scale: 1.2 }} 

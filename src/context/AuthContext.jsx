@@ -7,48 +7,80 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is stored in localStorage
+    // Check if user is stored in localStorage and validate token
     const storedUser = localStorage.getItem('francifyUser');
-    if (storedUser) {
+    const token = localStorage.getItem('francifyToken');
+
+    const isTokenValid = (token) => {
+      if (!token) return false;
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map(function(c) {
+              return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+        );
+        const { exp } = JSON.parse(jsonPayload);
+        if (!exp) return false;
+        const now = Date.now() / 1000;
+        return exp > now;
+      } catch (e) {
+        return false;
+      }
+    };
+
+    if (storedUser && token && isTokenValid(token)) {
       setCurrentUser(JSON.parse(storedUser));
+    } else {
+      setCurrentUser(null);
+      localStorage.removeItem('francifyUser');
+      localStorage.removeItem('francifyToken');
     }
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
-    try {
-      const response = await fetch('http://localhost:4000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+ const login = async (email, password) => {
+  try {
+    const response = await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to login');
-      }
-
-      const data = await response.json();
-
-      if (data.user) {
-        setCurrentUser(data.user);
-        localStorage.setItem('francifyUser', JSON.stringify(data.user));
-        localStorage.setItem('francifyToken', data.token);
-      } else {
-        setCurrentUser(null);
-        localStorage.removeItem('francifyUser');
-        localStorage.removeItem('francifyToken');
-      }
-
-      return data;
-    } catch (error) {
-      throw error;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to login');
     }
-  };
 
-  const register = async (name, email, password) => {
+    const data = await response.json();
+
+    if (data.user) {
+      console.log('Login user object:', data.user); // Debug log
+      setCurrentUser(data.user);
+      localStorage.setItem('francifyUser', JSON.stringify(data.user));
+      localStorage.setItem('francifyToken', data.token);
+    } else {
+      setCurrentUser(null);
+      localStorage.removeItem('francifyUser');
+      localStorage.removeItem('francifyToken');
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError) {
+      // Network error or server unreachable
+      throw new Error('Network error: Unable to reach the server. Please check if the backend server is running.');
+    }
+    throw error;
+  }
+};
+
+
+ const register = async (name, email, password) => {
     if (!name || !email || !password) {
       throw new Error('All fields are required');
     }
@@ -67,6 +99,41 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to register');
+      }
+
+      const data = await response.json();
+
+      if (data.user) {
+        setCurrentUser(data.user);
+        localStorage.setItem('francifyUser', JSON.stringify(data.user));
+        localStorage.setItem('francifyToken', data.token);
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // New registerAdmin function to create admin user with role
+  const registerAdmin = async (name, email, password) => {
+    if (!name || !email || !password) {
+      throw new Error('All fields are required');
+    }
+
+    const requestBody = { name, email, password, role: 'Admin' };
+
+    try {
+      const response = await fetch('http://localhost:4000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to register admin');
       }
 
       const data = await response.json();
@@ -155,7 +222,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    return currentUser?.role === 'admin';
+    return currentUser?.role === 'Admin';
   };
 
   const value = {

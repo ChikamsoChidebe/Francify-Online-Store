@@ -200,7 +200,7 @@ const ProductCard = ({ product }) => {
             </Link>
             </motion.button>
             <motion.button 
-              className="bg-gradient-to-r from-red-500 to-purple-600 text-white p-3 rounded-full shadow-lg hover:from-red-600 hover:to-purple-700 transition-colors" 
+className="bg-gradient-to-r from-red-500 to-black text-white p-3 rounded-full shadow-lg hover:from-red-600 hover:to-black transition-colors"
               onClick={handleAddToCart}
               title="Add to Cart"
               whileHover={{ scale: 1.1 }}
@@ -276,7 +276,7 @@ const ProductCard = ({ product }) => {
       <div className="mt-2">
         <motion.button 
           onClick={handleAddToCart}
-          className={`w-full py-3 font-medium text-white ${product.inStock ? 'bg-gradient-to-r from-red-500 to-purple-600 hover:from-red-600 hover:to-purple-700' : 'bg-gray-400'} transition-colors flex items-center justify-center`}
+className={`w-full py-3 font-medium text-white ${product.inStock ? 'bg-gradient-to-r from-red-500 to-black hover:from-red-600 hover:to-black' : 'bg-gray-400'} transition-colors flex items-center justify-center`}
           disabled={!product.inStock}
           whileHover={{ y: -2 }}
           whileTap={{ y: 0 }}

@@ -226,15 +226,15 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgb(243, 120, 120);
   transition: all 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgb(232, 99, 99);
 }
 
 .image-dot.active {
   width: 20px;
-  background: linear-gradient(to right, #e11d48, #9333ea);
+  background: red;
   border-radius: 4px;
 }
 
@@ -1096,7 +1096,7 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(to right, #e11d48, #9333ea);
+  background: #e11d48;
   transition: width 0.3s ease;
 }
 
@@ -3286,7 +3286,7 @@ body {
 }
 
 .pagination-link.active {
-  background: linear-gradient(to right, #e11d48, #9333ea);
+  background: #000000;
   color: white;
   box-shadow: 0 4px 6px -1px rgba(225, 29, 72, 0.2), 0 2px 4px -1px rgba(225, 29, 72, 0.1);
 }
