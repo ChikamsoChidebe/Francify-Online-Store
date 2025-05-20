@@ -81,39 +81,45 @@ export const AuthProvider = ({ children }) => {
 };
 
 
- const register = async (name, email, password) => {
-    if (!name || !email || !password) {
-      throw new Error('All fields are required');
-    }
+const register = async (name, email, password) => {
+  if (!name || !email || !password) {
+    throw new Error('All fields are required');
+  }
 
-    const requestBody = { name, email, password };
-
-    try {
-      const response = await fetch(`${API}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to register');
-      }
-
-      const data = await response.json();
-
-      if (data.user) {
-        setCurrentUser(data.user);
-        localStorage.setItem('francifyUser', JSON.stringify(data.user));
-        localStorage.setItem('francifyToken', data.token);
-      }
-      return data;
-    } catch (error) {
-      throw error;
-    }
+  // Automatically assign 'Admin' role if email matches
+  const requestBody = { 
+    name, 
+    email, 
+    password, 
+    role: email === "chikamsofavoured@gmail.com" ? "Admin" : undefined 
   };
+
+  try {
+    const response = await fetch(`${API}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to register');
+    }
+
+    const data = await response.json();
+
+    if (data.user) {
+      setCurrentUser(data.user);
+      localStorage.setItem('francifyUser', JSON.stringify(data.user));
+      localStorage.setItem('francifyToken', data.token);
+    }
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
 
   // New registerAdmin function to create admin user with role
   const registerAdmin = async (name, email, password) => {

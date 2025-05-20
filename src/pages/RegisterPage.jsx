@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { register } = useAuth();
+  const { register, registerAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -51,27 +51,16 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-       const response = await fetch(`${API}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || 'Failed to create an account');
-        setLoading(false);
-        return;
+      let data;
+      if (formData.email === 'chikamsofavoured@gmail.com') {
+        data = await registerAdmin(formData.name, formData.email, formData.password);
+      } else {
+        data = await register(formData.name, formData.email, formData.password);
       }
 
       setError('');
-
-      const data = await response.json();
       console.log(data);
 
-      // await register(formData.name, formData.email, formData.password);
       navigate('/');
     } catch (err) {
       setError(err.message || 'Failed to create an account');
