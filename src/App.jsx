@@ -41,6 +41,9 @@ import FAQ from './pages/FAQ';
 import LoadingSpinner from './components/LoadingSpinner';
 import WarrantySupportPage from './pages/WarrantySupportPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import AdminUserManagement from './components/AdminUserManagement';
+import AdminProductManagement from './components/AdminProductManagement'; // Create this if not present
+import AdminReports from './components/AdminReports'; // Create this file
 
 const AdminRoute = ({ children }) => {
   const { currentUser, isAdmin } = useAuth();
@@ -116,6 +119,21 @@ function App() {
                 </AdminRoute>
               } />
               {/* fallback or other routes */} 
+              <Route path="/admin/products/new" element={
+                <AdminRoute>
+                  <AdminProductManagement />
+                </AdminRoute>
+              } />
+              <Route path="/admin/users" element={
+                <AdminRoute>
+                  <AdminUserManagement />
+                </AdminRoute>
+              } />
+              <Route path="/admin/reports" element={
+                <AdminRoute>
+                  <AdminReports />
+                </AdminRoute>
+              } />
               </Routes>
             </main>
             <Footer />

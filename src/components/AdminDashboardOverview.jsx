@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+// ...existing code...
 
 const AdminDashboardOverview = () => {
   // Placeholder data for key metrics
@@ -25,6 +27,24 @@ const AdminDashboardOverview = () => {
     { id: 3, label: 'View Reports', icon: '📊' },
   ];
 
+   const navigate = useNavigate();
+
+     const handleQuickAction = (action) => {
+    switch (action) {
+      case 'Add Product':
+        navigate('/admin/products/new');
+        break;
+      case 'Manage Users':
+        navigate('/admin/users');
+        break;
+      case 'View Reports':
+        navigate('/admin/reports');
+        break;
+      default:
+        break;
+    }
+  };
+
   // Animation state for table rows
   const [showRows, setShowRows] = useState(false);
   useEffect(() => {
@@ -32,14 +52,16 @@ const AdminDashboardOverview = () => {
   }, []);
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen text-gray-900 rounded-3xl shadow-2xl max-w-7xl mx-auto animate-fadeIn">
-      <h2 className="text-4xl font-extrabold mb-10 text-gray-900 tracking-tight animate-fadeInDown">Dashboard Overview</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
+    <div className="p-2 sm:p-4 md:p-8 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen text-gray-900 rounded-3xl shadow-2xl max-w-7xl mx-auto animate-fadeIn">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 md:mb-10 text-gray-900 tracking-tight animate-fadeInDown">
+        Dashboard Overview
+      </h2>
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 md:mb-14">
         {metrics.map((metric, idx) => (
           <div
             key={metric.id}
             className={`
-              bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-7 flex items-center space-x-5
+              bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-4 sm:p-7 flex items-center space-x-3 sm:space-x-5
               border border-gray-200
               transition-all duration-300 ease-in-out
               hover:scale-105 hover:shadow-2xl
@@ -50,27 +72,27 @@ const AdminDashboardOverview = () => {
               animationFillMode: 'both'
             }}
           >
-            <div className={`text-5xl bg-gradient-to-br ${metric.color} text-white rounded-full p-4 shadow-lg`}>
+            <div className={`text-3xl sm:text-5xl bg-gradient-to-br ${metric.color} text-white rounded-full p-3 sm:p-4 shadow-lg`}>
               {metric.icon}
             </div>
             <div>
-              <p className="text-lg font-semibold text-gray-700">{metric.title}</p>
-              <p className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-500">{metric.value}</p>
+              <p className="text-sm sm:text-lg font-semibold text-gray-700">{metric.title}</p>
+              <p className="text-xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-pink-500">{metric.value}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mb-14">
-        <h3 className="text-2xl font-bold mb-5 text-gray-800 animate-fadeInLeft">Recent Orders</h3>
-        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 max-w-4xl mx-auto border border-gray-200">
-          <table className="w-full text-left table-auto">
+      <div className="mb-8 md:mb-14">
+        <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-5 text-gray-800 animate-fadeInLeft">Recent Orders</h3>
+        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-3 sm:p-8 max-w-full md:max-w-4xl mx-auto border border-gray-200 overflow-x-auto">
+          <table className="w-full text-left table-auto text-xs sm:text-base">
             <thead>
               <tr className="border-b border-gray-300">
-                <th className="py-3 px-4 text-gray-700 font-semibold">Order ID</th>
-                <th className="py-3 px-4 text-gray-700 font-semibold">Customer</th>
-                <th className="py-3 px-4 text-gray-700 font-semibold">Total</th>
-                <th className="py-3 px-4 text-gray-700 font-semibold">Status</th>
+                <th className="py-2 sm:py-3 px-2 sm:px-4 text-gray-700 font-semibold">Order ID</th>
+                <th className="py-2 sm:py-3 px-2 sm:px-4 text-gray-700 font-semibold">Customer</th>
+                <th className="py-2 sm:py-3 px-2 sm:px-4 text-gray-700 font-semibold">Total</th>
+                <th className="py-2 sm:py-3 px-2 sm:px-4 text-gray-700 font-semibold">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -87,10 +109,10 @@ const AdminDashboardOverview = () => {
                     animationFillMode: 'both'
                   }}
                 >
-                  <td className="py-3 px-4 font-mono">{order.id}</td>
-                  <td className="py-3 px-4">{order.customer}</td>
-                  <td className="py-3 px-4 font-semibold text-red-600">{order.total}</td>
-                  <td className={`py-3 px-4 font-semibold ${
+                  <td className="py-2 sm:py-3 px-2 sm:px-4 font-mono">{order.id}</td>
+                  <td className="py-2 sm:py-3 px-2 sm:px-4">{order.customer}</td>
+                  <td className="py-2 sm:py-3 px-2 sm:px-4 font-semibold text-red-600">{order.total}</td>
+                  <td className={`py-2 sm:py-3 px-2 sm:px-4 font-semibold ${
                     order.status === 'Delivered' ? 'text-green-600' :
                     order.status === 'Shipped' ? 'text-blue-600' :
                     'text-yellow-600'
@@ -105,25 +127,26 @@ const AdminDashboardOverview = () => {
       </div>
 
       <div>
-        <h3 className="text-2xl font-bold mb-5 text-gray-800 animate-fadeInLeft">Quick Actions</h3>
-        <div className="flex space-x-8 justify-center md:justify-start">
+        <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-5 text-gray-800 animate-fadeInLeft">Quick Actions</h3>
+        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-8 justify-center md:justify-start">
           {quickActions.map((action, idx) => (
             <button
               key={action.id}
               className={`
-                bg-gradient-to-br from-red-500 to-pink-500 text-white px-8 py-4 rounded-xl shadow-xl
+                bg-gradient-to-br from-red-500 to-pink-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-xl
                 hover:from-pink-600 hover:to-red-700
                 transition-all duration-200 ease-in-out
                 hover:scale-110 hover:shadow-2xl
-                flex items-center space-x-4 font-semibold text-lg
+                flex items-center space-x-2 sm:space-x-4 font-semibold text-base sm:text-lg
                 animate-fadeInUp
               `}
               style={{
                 animationDelay: `${idx * 120 + 400}ms`,
                 animationFillMode: 'both'
               }}
+              onClick={() => handleQuickAction(action.label)}
             >
-              <span className="text-3xl">{action.icon}</span>
+              <span className="text-2xl sm:text-3xl">{action.icon}</span>
               <span>{action.label}</span>
             </button>
           ))}
@@ -166,4 +189,3 @@ const AdminDashboardOverview = () => {
 };
 
 export default AdminDashboardOverview;
-
