@@ -225,6 +225,23 @@ export const AuthProvider = ({ children }) => {
     return currentUser?.role === 'Admin';
   };
 
+  const fetchAllUsers = async () => {
+  const token = localStorage.getItem('francifyToken');
+  if (!token) throw new Error('Not authenticated');
+  const response = await fetch('http://localhost:4000/users', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to fetch users');
+  }
+  const data = await response.json();
+  return data.users || [];
+};
+
   const value = {
     currentUser,
     login,
@@ -233,7 +250,8 @@ export const AuthProvider = ({ children }) => {
     uploadProfilePhoto,
     logout,
     isAdmin,
-    loading
+    loading,
+    fetchAllUsers 
   };
 
   return (
