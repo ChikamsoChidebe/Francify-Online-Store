@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import API from '../MyAPI';
 
 export const AuthContext = createContext();
 
@@ -45,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
  const login = async (email, password) => {
   try {
-    const response = await fetch('http://localhost:4000/login', {
+    const response = await fetch(`${API}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -88,7 +89,7 @@ export const AuthProvider = ({ children }) => {
     const requestBody = { name, email, password };
 
     try {
-      const response = await fetch('http://localhost:4000/signup', {
+      const response = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +124,7 @@ export const AuthProvider = ({ children }) => {
     const requestBody = { name, email, password, role: 'Admin' };
 
     try {
-      const response = await fetch('http://localhost:4000/signup', {
+      const response = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('francifyToken');
       if (!token) throw new Error('Not authenticated');
 
-      const response = await fetch('http://localhost:4000/profile', {
+      const response = await fetch(`${API}/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -228,7 +229,7 @@ export const AuthProvider = ({ children }) => {
   const fetchAllUsers = async () => {
   const token = localStorage.getItem('francifyToken');
   if (!token) throw new Error('Not authenticated');
-  const response = await fetch('http://localhost:4000/users', {
+  const response = await fetch(`${API}/users`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'

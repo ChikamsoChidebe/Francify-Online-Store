@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook, FaApple } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import API from '../MyAPI';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-       const response = await fetch('http://localhost:4000/signup', {
+       const response = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
