@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
-import { useAuth } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Layout Components
 import Header from './components/Header';
@@ -42,16 +41,17 @@ import LoadingSpinner from './components/LoadingSpinner';
 import WarrantySupportPage from './pages/WarrantySupportPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import AdminUserManagement from './components/AdminUserManagement';
-import AdminProductManagement from './components/AdminProductManagement'; // Create this if not present
-import AdminReports from './components/AdminReports'; // Create this file
+import AdminProductManagement from './components/AdminProductManagement';
+import AdminReports from './components/AdminReports';
 
+// --- FIX: isAdmin should be used as a boolean, not a function ---
 const AdminRoute = ({ children }) => {
   const { currentUser, isAdmin } = useAuth();
 
   if (!currentUser) {
     return <Navigate to="/login" replace />;
   }
-  if (!isAdmin()) {
+  if (!isAdmin) { // <-- FIXED: removed ()
     return <Navigate to="/" replace />;
   }
   return children;
@@ -72,8 +72,6 @@ function App() {
   if (loading) {
     return <LoadingSpinner />;
   }
-
-
 
   return (
     <Router>
@@ -114,26 +112,25 @@ function App() {
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/warranty-support" element={<WarrantySupportPage />} />
                 <Route path="/admin" element={
-                <AdminRoute>
-                  <AdminPage />
-                </AdminRoute>
-              } />
-              {/* fallback or other routes */} 
-              <Route path="/admin/products/new" element={
-                <AdminRoute>
-                  <AdminProductManagement />
-                </AdminRoute>
-              } />
-              <Route path="/admin/users" element={
-                <AdminRoute>
-                  <AdminUserManagement />
-                </AdminRoute>
-              } />
-              <Route path="/admin/reports" element={
-                <AdminRoute>
-                  <AdminReports />
-                </AdminRoute>
-              } />
+                  <AdminRoute>
+                    <AdminPage />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/products/new" element={
+                  <AdminRoute>
+                    <AdminProductManagement />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/users" element={
+                  <AdminRoute>
+                    <AdminUserManagement />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/reports" element={
+                  <AdminRoute>
+                    <AdminReports />
+                  </AdminRoute>
+                } />
               </Routes>
             </main>
             <Footer />

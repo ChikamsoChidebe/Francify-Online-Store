@@ -16,7 +16,7 @@ const Header = () => {
   const { cart, wishlist } = useCart();
   const { currentUser, isAdmin } = useAuth();
   console.log('Header currentUser:', currentUser);
-  console.log('Header isAdmin:', isAdmin());
+  console.log('Header isAdmin:', isAdmin);
   const navigate = useNavigate();
   const searchRef = useRef(null);
 
@@ -707,6 +707,28 @@ const Header = () => {
           </motion.div>
         </motion.div>
       </motion.header>
+            {isAdmin && (
+      <motion.div
+        initial={{ y: -40, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="admin-mode-banner"
+      >
+        <span className="mr-3 animate-pulse">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="adminShield" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#fff" />
+                <stop offset="1" stopColor="#ff1744" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#adminShield)" d="M12 2l7 4v5c0 5.25-3.5 10-7 11-3.5-1-7-5.75-7-11V6l7-4z"/>
+            <path fill="#fff" fillOpacity="0.15" d="M12 2l7 4v5c0 5.25-3.5 10-7 11V2z"/>
+            <path fill="#fff" d="M12 8.5a1 1 0 0 0-1 1V13a1 1 0 0 0 2 0v-3.5a1 1 0 0 0-1-1zm0 7a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5z"/>
+          </svg>
+        </span>
+        ADMIN MODE
+      </motion.div>  )}
     </>
   );
 };

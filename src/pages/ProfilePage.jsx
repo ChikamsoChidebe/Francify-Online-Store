@@ -65,6 +65,7 @@ const ProfilePage = () => {
       };
       const data = await updateProfile(updatedData);
       setMessage({ type: 'success', text: 'Personal information updated successfully!' });
+
       // Update formData with returned user data to reflect saved changes
       setFormData(prev => ({
         ...prev,
@@ -77,10 +78,14 @@ const ProfilePage = () => {
         zipCode: data.user.zipCode || '',
         country: data.user.country || 'USA',
       }));
+
+      // Persist the updated user in localStorage
+      localStorage.setItem('francifyUser', JSON.stringify(data.user));
+
     } catch (error) {
       setMessage({ type: 'error', text: error.message || 'Failed to update profile' });
     }
-    
+
     // Clear message after 3 seconds
     setTimeout(() => {
       setMessage({ type: '', text: '' });
@@ -185,14 +190,15 @@ const ProfilePage = () => {
                 >
                   <FaLock className="mr-3" /> Security
                 </button>
-                {currentUser.role === 'Admin' && (
-                  <button
-                    onClick={() => navigate('/admin')}
-                    className="w-full flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition"
-                  >
-                    <FaUser className="mr-3" /> Admin Dashboard
-                  </button>
-                )}
+                  {(currentUser.role === 'Admin' ||
+                      (currentUser.email && currentUser.email.trim().toLowerCase() === 'chikamsofavoured@gmail.com')) && (
+                      <button
+                        onClick={() => navigate('/admin')}
+                        className="w-full flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition"
+                      >
+                        <FaUser className="mr-3" /> Admin Dashboard
+                      </button>
+                    )}
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center px-4 py-2 rounded-md text-red-600 hover:bg-red-50"

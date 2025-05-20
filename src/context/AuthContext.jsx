@@ -44,90 +44,70 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
- const login = async (email, password) => {
-  try {
-    const response = await fetch(`${API}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to login');
+  useEffect(() => {
+    if (
+      currentUser &&
+      currentUser.email &&
+      currentUser.email.trim().toLowerCase() === 'chikamsofavoured@gmail.com'
+    ) {
+      // Force role to Admin for this email
+      if (currentUser.role !== 'Admin') {
+        const adminUser = { ...currentUser, role: 'Admin' };
+        setCurrentUser(adminUser);
+        localStorage.setItem('francifyUser', JSON.stringify(adminUser));
+      }
     }
+  }, [currentUser]);
 
-    const data = await response.json();
+  const login = async (email, password) => {
+    try {
+      const response = await fetch(`${API}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (data.user) {
-      console.log('Login user object:', data.user); // Debug log
-      setCurrentUser(data.user);
-      localStorage.setItem('francifyUser', JSON.stringify(data.user));
-      localStorage.setItem('francifyToken', data.token);
-    } else {
-      setCurrentUser(null);
-      localStorage.removeItem('francifyUser');
-      localStorage.removeItem('francifyToken');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to login');
+      }
+
+      const data = await response.json();
+
+      if (data.user) {
+        console.log('Login user object:', data.user); // Debug log
+        setCurrentUser(data.user);
+        localStorage.setItem('francifyUser', JSON.stringify(data.user));
+        localStorage.setItem('francifyToken', data.token);
+      } else {
+        setCurrentUser(null);
+        localStorage.removeItem('francifyUser');
+        localStorage.removeItem('francifyToken');
+      }
+
+      return data;
+    } catch (error) {
+      if (error instanceof TypeError) {
+        // Network error or server unreachable
+        throw new Error('Network error: Unable to reach the server. Please check if the backend server is running.');
+      }
+      throw error;
     }
-
-    return data;
-  } catch (error) {
-    if (error instanceof TypeError) {
-      // Network error or server unreachable
-      throw new Error('Network error: Unable to reach the server. Please check if the backend server is running.');
-    }
-    throw error;
-  }
-};
-
-
-const register = async (name, email, password) => {
-  if (!name || !email || !password) {
-    throw new Error('All fields are required');
-  }
-
-  // Automatically assign 'Admin' role if email matches
-  const requestBody = { 
-    name, 
-    email, 
-    password, 
-    role: email === "chikamsofavoured@gmail.com" ? "Admin" : undefined 
   };
 
-  try {
-    const response = await fetch(`${API}/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to register');
-    }
-
-    const data = await response.json();
-
-    if (data.user) {
-      setCurrentUser(data.user);
-      localStorage.setItem('francifyUser', JSON.stringify(data.user));
-      localStorage.setItem('francifyToken', data.token);
-    }
-    return data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-  // New registerAdmin function to create admin user with role
-  const registerAdmin = async (name, email, password) => {
+  const register = async (name, email, password) => {
     if (!name || !email || !password) {
       throw new Error('All fields are required');
     }
 
-    const requestBody = { name, email, password, role: 'Admin' };
+    // Automatically assign 'Admin' role if email matches
+    const requestBody = { 
+      name, 
+      email, 
+      password, 
+      role: email === "chikamsofavoured@gmail.com" ? "Admin" : undefined 
+    };
 
     try {
       const response = await fetch(`${API}/signup`, {
@@ -140,7 +120,7 @@ const register = async (name, email, password) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to register admin');
+        throw new Error(errorData.message || 'Failed to register');
       }
 
       const data = await response.json();
@@ -155,6 +135,41 @@ const register = async (name, email, password) => {
       throw error;
     }
   };
+
+    // New registerAdmin function to create admin user with role
+    const registerAdmin = async (name, email, password) => {
+      if (!name || !email || !password) {
+        throw new Error('All fields are required');
+      }
+
+      const requestBody = { name, email, password, role: 'Admin' };
+
+      try {
+        const response = await fetch(`${API}/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to register admin');
+        }
+
+        const data = await response.json();
+
+        if (data.user) {
+          setCurrentUser(data.user);
+          localStorage.setItem('francifyUser', JSON.stringify(data.user));
+          localStorage.setItem('francifyToken', data.token);
+        }
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    };
 
   const updateProfile = async (updatedData) => {
     try {
@@ -228,31 +243,35 @@ const register = async (name, email, password) => {
     localStorage.removeItem('francifyToken');
   };
 
-  const isAdmin = () => {
-    return currentUser?.role === 'Admin';
-  };
+  const isAdmin =
+    currentUser &&
+    (
+      currentUser.role === 'Admin' ||
+      (currentUser.email && currentUser.email.trim().toLowerCase() === 'chikamsofavoured@gmail.com')
+    );
 
   const fetchAllUsers = async () => {
-  const token = localStorage.getItem('francifyToken');
-  if (!token) throw new Error('Not authenticated');
-  const response = await fetch(`${API}/users`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+    const token = localStorage.getItem('francifyToken');
+    if (!token) throw new Error('Not authenticated');
+    const response = await fetch(`${API}/users`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch users');
     }
-  });
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch users');
-  }
-  const data = await response.json();
-  return data.users || [];
-};
+    const data = await response.json();
+    return data.users || [];
+  };
 
   const value = {
     currentUser,
     login,
     register,
+    registerAdmin,
     updateProfile,
     uploadProfilePhoto,
     logout,

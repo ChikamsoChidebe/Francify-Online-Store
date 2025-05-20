@@ -232,6 +232,52 @@ body {
   box-shadow: 0 1px 3px rgb(232, 99, 99);
 }
 
+@keyframes admin-glow {
+  0% {
+    box-shadow: 0 0 30px 5px #ff174480, 0 2px 16px 0 rgba(0,0,0,0.15);
+    border-color: #fff3;
+  }
+  50% {
+    box-shadow: 0 0 50px 10px #ff1744cc, 0 2px 16px 0 rgba(0,0,0,0.18);
+    border-color: #ff1744;
+  }
+  100% {
+    box-shadow: 0 0 30px 5px #ff174480, 0 2px 16px 0 rgba(0,0,0,0.15);
+    border-color: #fff3;
+  }
+}
+.animate-admin-glow {
+  animation: admin-glow 2.2s infinite;
+}
+
+/* Modern Admin Mode Banner */
+.admin-mode-banner {
+  position: fixed;
+  top: 5.5rem; /* Lowered from top */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 2.5rem;
+  border-radius: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: linear-gradient(90deg, #ff1744 0%, #111 60%, #b91c1c 100%);
+  color: #fff;
+  box-shadow: 0 8px 32px 0 rgba(255,23,68,0.25), 0 2px 16px 0 rgba(0,0,0,0.18);
+  border: 2.5px solid #fff3;
+  animation: admin-glow 2.2s infinite, admin-float 3.5s ease-in-out infinite;
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes admin-float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(12px); }
+}
+
 .image-dot.active {
   width: 20px;
   background: red;
