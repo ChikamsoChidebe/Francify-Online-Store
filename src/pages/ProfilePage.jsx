@@ -53,37 +53,17 @@ const ProfilePage = () => {
   const handlePersonalInfoSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        zipCode: formData.zipCode,
-        country: formData.country,
-      };
-      const data = await updateProfile(updatedData);
+      await updateProfile(formData);
       setMessage({ type: 'success', text: 'Personal information updated successfully!' });
-
-      // Update formData with returned user data to reflect saved changes
-      setFormData(prev => ({
-        ...prev,
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone || '',
-        address: data.user.address || '',
-        city: data.user.city || '',
-        state: data.user.state || '',
-        zipCode: data.user.zipCode || '',
-        country: data.user.country || 'USA',
-      }));
-
-      // Persist the updated user in localStorage
-      localStorage.setItem('francifyUser', JSON.stringify(data.user));
-
     } catch (error) {
-      setMessage({ type: 'error', text: error.message || 'Failed to update profile' });
+      setMessage({ type: 'error', text: error.message });
+      // If error is session expired, logout and navigate in a useEffect
+      if (error.message.includes('Session expired')) {
+        setTimeout(() => {
+          logout();
+          window.location.href = '/login';
+        }, 100); // Delay to avoid React warning
+      }
     }
 
     // Clear message after 3 seconds
@@ -339,6 +319,7 @@ const ProfilePage = () => {
                           <option value="AUS">Australia</option>
                           <option value="GER">Germany</option>
                           <option value="FRA">France</option>
+                          <option value="NGA">Nigeria</option>
                         </select>
                       </div>
                     </div>

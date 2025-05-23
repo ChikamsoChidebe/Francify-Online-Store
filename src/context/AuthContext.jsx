@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setCurrentUser(null);
         localStorage.removeItem('francifyUser');
-        localStorage.removeItem('francifyToken');
+        localStorage.removeItem('francifyToken'); 
       }
 
       return data;
@@ -186,6 +186,11 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          logout();
+          window.location.href = '/login';
+          throw new Error('Session expired. Please log in again.');
+        }
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to update profile');
       }
