@@ -173,8 +173,12 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (updatedData) => {
     try {
+      console.log('updateProfile called with data:', updatedData);
       const token = localStorage.getItem('francifyToken');
       if (!token) throw new Error('Not authenticated');
+
+      // Merge currentUser data with updatedData to avoid overwriting with empty fields
+      const mergedData = { ...currentUser, ...updatedData };
 
       const response = await fetch(`${API}/profile`, {
         method: 'PUT',
@@ -182,7 +186,7 @@ export const AuthProvider = ({ children }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(mergedData),
       });
 
       if (!response.ok) {
@@ -195,14 +199,27 @@ export const AuthProvider = ({ children }) => {
         throw new Error(errorData.message || 'Failed to update profile');
       }
 
-      const data = await response.json();
+      // After update, fetch the updated user profile
+      const profileResponse = await fetch(`${API}/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      if (data.user) {
-        setCurrentUser(data.user);
-        localStorage.setItem('francifyUser', JSON.stringify(data.user));
+      if (!profileResponse.ok) {
+        throw new Error('Failed to fetch updated profile');
       }
 
-      return data;
+      const profileData = await profileResponse.json();
+      console.log('Fetched updated profile data:', profileData);
+
+      if (profileData.user) {
+        setCurrentUser(profileData.user);
+        localStorage.setItem('francifyUser', JSON.stringify(profileData.user));
+      }
+
+      return profileData;
     } catch (error) {
       throw error;
     }

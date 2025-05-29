@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import API from '../MyAPI';
 
 const roles = ['user', 'admin'];
 
@@ -26,7 +27,7 @@ const AdminUserManagement = () => {
   // Promote to admin
   const promoteToAdmin = async (id) => {
     try {
-      const res = await fetch(`http://localhost:4000/users/${id}/promote`, {
+      const res = await fetch(`${API}/users/${id}/promote`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -44,7 +45,7 @@ const AdminUserManagement = () => {
   // Deactivate/Activate user
   const toggleStatus = async (id, currentStatus) => {
     try {
-      const res = await fetch(`http://localhost:4000/users/${id}/status`, {
+      const res = await fetch(`${API}/users/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: currentStatus === 'active' ? 'inactive' : 'active' })
@@ -63,7 +64,7 @@ const AdminUserManagement = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('http://localhost:4000/users');
+        const res = await fetch(`${API}/users`);
         if (!res.ok) throw new Error('Failed to fetch users');
         const data = await res.json();
         setUsers(Array.isArray(data) ? data : data.users || []);
@@ -87,13 +88,13 @@ const AdminUserManagement = () => {
         className="mb-4 p-2 rounded w-full text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
       />
       <div className="mt-10">
-        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 max-w-5xl mx-auto border border-gray-200">
+        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl p-8 max-w-full mx-auto border border-gray-200 overflow-x-auto">
           {usersLoading ? (
             <div className="text-center py-10 text-lg text-gray-500 animate-pulse">Loading users...</div>
           ) : currentUsers.length === 0 ? (
             <div className="text-center py-10 text-lg text-gray-500">No users found.</div>
           ) : (
-            <table className="w-full text-left table-auto">
+            <table className="min-w-full text-left table-auto">
               <thead>
                 <tr className="border-b border-gray-300 text-center">
                   <th className="py-3 px-4 text-gray-700 font-semibold">Name</th>
@@ -160,7 +161,7 @@ const AdminUserManagement = () => {
           )}
         </div>
       </div>
-      <div className="mt-4 flex justify-center space-x-2">
+      <div className="mt-4 flex justify-center space-x-2 flex-wrap">
         {[...Array(totalPages)].map((_, i) => (
           <button
             key={i + 1}
